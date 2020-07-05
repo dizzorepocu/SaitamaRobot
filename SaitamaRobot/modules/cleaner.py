@@ -62,16 +62,16 @@ def set_blue_text_must_click(bot: Bot, update: Update, args: List[str]):
         val = args[0].lower()
         if val == "off" or val == "no":
             sql.set_cleanbt(chat.id, False)
-            reply = "Bluetext cleaning has been disabled for <b>{}</b>".format(html.escape(chat.title))
+            reply = "Bluetext temizliği aşağıdakiler için devre dışı bırakıldı: <b>{}</b>".format(html.escape(chat.title))
             message.reply_text(reply, parse_mode=ParseMode.HTML)
 
         elif val == "yes" or val == "on":
             sql.set_cleanbt(chat.id, True)
-            reply = "Bluetext cleaning has been enabled for <b>{}</b>".format(html.escape(chat.title))
+            reply = "Bluetext temizleme aşağıdakiler için etkinleştirildi <b>{}</b>".format(html.escape(chat.title))
             message.reply_text(reply, parse_mode=ParseMode.HTML)
 
         else:
-            reply = "Invalid argument.Accepted values are 'yes', 'on', 'no', 'off'"
+            reply = "Geçersiz argüman. Kabul edilen değerler 'yes', 'on', 'no', 'off'"
             message.reply_text(reply)
     else:
         clean_status = sql.is_enabled(chat.id)
@@ -79,7 +79,7 @@ def set_blue_text_must_click(bot: Bot, update: Update, args: List[str]):
             clean_status = "Enabled"
         else:
             clean_status = "Disabled"
-        reply = "Bluetext cleaning for <b>{}</b> : <b>{}</b>".format(chat.title, clean_status)
+        reply = "İçin Bluetext temizleme <b>{}</b> : <b>{}</b>".format(chat.title, clean_status)
         message.reply_text(reply, parse_mode=ParseMode.HTML)
 
 
@@ -94,13 +94,13 @@ def add_bluetext_ignore(bot: Bot, update: Update, args: List[str]):
         val = args[0].lower()
         added = sql.chat_ignore_command(chat.id, val)
         if added:
-            reply = "<b>{}</b> has been added to bluetext cleaner ignore list.".format(args[0])
+            reply = "<b>{}</b> bluetext cleaner yoksayma listesine eklendi.".format(args[0])
         else:
-            reply = "Command is already ignored."
+            reply = "Komut zaten yok sayıldı."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
         
     else:
-        reply = "No command supplied to be ignored."
+        reply = "Komut zaten yok sayıldı."
         message.reply_text(reply)
 
 
@@ -115,13 +115,13 @@ def remove_bluetext_ignore(bot: Bot, update: Update, args: List[str]):
         val = args[0].lower()
         removed = sql.chat_unignore_command(chat.id, val)
         if removed:
-            reply = "<b>{}</b> has been removed from bluetext cleaner ignore list.".format(args[0])
+            reply = "<b>{}</b> bluetext cleaner yoksay listesinden kaldırıldı.".format(args[0])
         else:
-            reply = "Command isn't ignored currently."
+            reply = "Komut şu anda yok sayılmıyor."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
         
     else:
-        reply = "No command supplied to be unignored."
+        reply = "İmzasız olarak gönderilecek komut yok."
         message.reply_text(reply)
 
 
@@ -135,13 +135,13 @@ def add_bluetext_ignore_global(bot: Bot, update: Update, args: List[str]):
         val = args[0].lower()
         added = sql.global_ignore_command(val)
         if added:
-            reply = "<b>{}</b> has been added to global bluetext cleaner ignore list.".format(args[0])
+            reply = "<b>{}</b> global bluetext cleaner yoksayma listesine eklendi.".format(args[0])
         else:
             reply = "Command is already ignored."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
         
     else:
-        reply = "No command supplied to be ignored."
+        reply = "Yok sayılacak komut yok."
         message.reply_text(reply)
 
 
@@ -155,13 +155,13 @@ def remove_bluetext_ignore_global(bot: Bot, update: Update, args: List[str]):
         val = args[0].lower()
         removed = sql.global_unignore_command(val)
         if removed:
-            reply = "<b>{}</b> has been removed from global bluetext cleaner ignore list.".format(args[0])
+            reply = "<b>{}</b> global bluetext cleaner yoksayma listesinden kaldırıldı.".format(args[0])
         else:
-            reply = "Command isn't ignored currently."
+            reply = "Komut şu anda yok sayılmıyor."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
         
     else:
-        reply = "No command supplied to be unignored."
+        reply = "İmzasız olarak gönderilecek komut yok."
         message.reply_text(reply)
 
 
@@ -176,19 +176,19 @@ def bluetext_ignore_list(bot: Bot, update: Update):
     text = ""
 
     if global_ignored_list:
-        text = "The following commands are currently ignored globally from bluetext cleaning :\n"
+        text = "Aşağıdaki komutlar şu anda bluetext temizliğinde küresel olarak göz ardı edilmektedir. :\n"
 
         for x in global_ignored_list:
             text += f" - <code>{x}</code>\n"
 
     if local_ignore_list:
-        text += "\nThe following commands are currently ignored locally from bluetext cleaning :\n"
+        text += "\nAşağıdaki komutlar şu anda bluetext temizliğinde yerel olarak yoksayılmaktadır :\n"
 
         for x in local_ignore_list:
             text += f" - <code>{x}</code>\n"
 
     if text == "":
-        text = "No commands are currently ignored from bluetext cleaning."
+        text = "Bluetext temizliğinde şu anda hiçbir komut göz ardı edilmiyor."
         message.reply_text(text)
         return
 
@@ -197,15 +197,15 @@ def bluetext_ignore_list(bot: Bot, update: Update):
 
 
 __help__ = """
-Blue text cleaner removed any made up commands that people send in your chat.
- • `/cleanblue <on/off/yes/no>`*:* clean commands after sending
- • `/ignoreblue <word>`*:* prevent auto cleaning of the command
- • `/unignoreblue <word>`*:* remove prevent auto cleaning of the command
- • `/listblue`*:* list currently whitelisted commands
+Mavi metin temizleyici, insanların sohbetinizde gönderdiği tüm makyaj komutlarını kaldırdı.
+ • `/cleanblue <on/off/yes/no>`*:* gönderdikten sonra komutları temizle
+ • `/ignoreblue <word>`*:* komutun otomatik temizlenmesini önle
+ • `/unignoreblue <word>`*:* kaldır komutun otomatik temizlenmesini önle
+ • `/listblue`*:* mevcut beyaz listeye alınmış komutları listele
  
- *Following are Disasters only commands, admins cannot use these:*
- • `/gignoreblue <word>`*:* globally ignorea bluetext cleaning of saved word across Saitama.
- • `/ungignoreblue <word>`*:* remove said command from global cleaning list
+ *Yalnızca Felaket komutları aşağıdadır, yöneticiler bunları kullanamaz:*
+ • `/gignoreblue <word>`*:* küresel bot genelinde kaydedilen kelimenin bluetext temizlik görmezden.
+ • `/ungignoreblue <word>`*:* söz konusu komutu genel temizlik listesinden kaldırt
 """
 
 SET_CLEAN_BLUE_TEXT_HANDLER = CommandHandler("cleanblue", set_blue_text_must_click, pass_args=True)
