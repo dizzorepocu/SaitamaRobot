@@ -35,13 +35,13 @@ def add_chat(bot: Bot, update: Update):
         ses_id = str(ses.id)
         expires = str(ses.expires)
         sql.set_ses(chat.id, ses_id, expires)
-        msg.reply_text("AI successfully enabled for this chat!")
+        msg.reply_text("AI bu sohbet için başarıyla etkinleştirildi!")
         message = (f"<b>{html.escape(chat.title)}:</b>\n"
                   f"#AI_ENABLED\n"
                   f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n")
         return message
     else:
-        msg.reply_text("AI is already enabled for this chat!")
+        msg.reply_text("AI bu sohbet için zaten etkin!")
         return ""    
         
 @run_async
@@ -53,11 +53,11 @@ def remove_chat(bot: Bot, update: Update):
     user = update.effective_user
     is_chat = sql.is_chat(chat.id)
     if not is_chat:
-        msg.reply_text("AI isn't enabled here in the first place!")
+        msg.reply_text("AI burada en başta etkin değil!")
         return ""
     else:
         sql.rem_chat(chat.id)
-        msg.reply_text("AI disabled successfully!")
+        msg.reply_text("AI başarıyla devre dışı bırakıldı!")
         message = (f"<b>{html.escape(chat.title)}:</b>\n"
                   f"#AI_DISABLED\n"
                   f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n")
@@ -125,18 +125,18 @@ def list_chatbot_chats(bot: Bot, update: Update):
 __mod_name__ = "Chatbot"
 
 __help__ = f"""
-Chatbot utilizes the CoffeeHouse API and allows Saitama to talk and provides a more interactive group chat experience.
+Chatbot CoffeeHouse API'sini kullanır ve bot'un konuşmasına izin verir ve daha etkileşimli bir grup sohbet deneyimi sağlar.
 
 *Commands:* 
 *Admins only:*
- • `/addchat`*:* Enables Chatbot mode in the chat.
- • `/rmchat`*:* Disables Chatbot mode in the chat.
+ • `/addchat`*:* Sohbette Chatbot modunu etkinleştirir.
+ • `/rmchat`*:* Sohbette Chatbot modunu devre dışı bırakır.
  
-*Dragons or higher only:* 
- • `/listaichats`*:* Lists the chats the chatmode is enabled in.
+*Yalnızca ejderhalar veya üstü:* 
+ • `/listaichats`*:* Sohbet modunun etkin olduğu sohbetleri listeler.
 
-Reports bugs at {SUPPORT_CHAT}
-*Powered by CoffeeHouse* (https://coffeehouse.intellivoid.net/) from @Intellivoid
+Adresindeki hataları raporlar {SUPPORT_CHAT}
+*Yapımcı CoffeeHouse* (https://coffeehouse.intellivoid.net/) from @Intellivoid
 """         
 
 
