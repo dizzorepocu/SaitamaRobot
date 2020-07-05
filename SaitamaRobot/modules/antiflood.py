@@ -50,7 +50,7 @@ def check_flood(bot: Bot, update: Update) -> str:
             [[InlineKeyboardButton("Unmute", callback_data="unmute_flooder({})".format(user.id))]]
         )
         bot.send_message(chat.id,
-            f"{mention_html(user.id, user.first_name)} has been muted for flooding the group!",
+            f"{mention_html(user.id, user.first_name)} gruba flood nedeniyle susturuldu!",
             reply_markup=keyboard,
             parse_mode="HTML"
         )
@@ -59,15 +59,15 @@ def check_flood(bot: Bot, update: Update) -> str:
         return "<b>{}:</b>" \
                "\n#MUTED" \
                "\n<b>User:</b> {}" \
-               "\nFlooded the group.\nMuted until an admin unmutes".format(html.escape(chat.title),
+               "\nGruba lood Attı.\nYönetici sesini açana kadar sessize alındı".format(html.escape(chat.title),
                                              mention_html(user.id, user.first_name))
 
     except BadRequest:
-        msg.reply_text("I can't mute people here, give me permissions first! Until then, I'll disable antiflood.")
+        msg.reply_text("Burada insanları susturamıyorum, önce bana izin ver! O zamana kadar antifloodu devre dışı bırakacağım.")
         sql.set_flood(chat.id, 0)
         log_message = ("<b>{chat.title}:</b>\n"
                        "#INFO\n"
-                       "Don't have kick permissions, so automatically disabled antiflood.")
+                       "Tekme izinleriniz yok, bu nedenle antiflood otomatik olarak devre dışı bırakıldı.")
 
         return log_message
 
@@ -123,17 +123,17 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
 
         if val == "off" or val == "no" or val == "0":
             sql.set_flood(chat.id, 0)
-            message.reply_text("Antiflood has been disabled{}.".format(chat_name), parse_mode=ParseMode.HTML)
+            message.reply_text("Antiflood devre dışı bırakıldı{}.".format(chat_name), parse_mode=ParseMode.HTML)
 
         elif val.isdigit():
             amount = int(val)
             if amount <= 0:
                 sql.set_flood(chat.id, 0)
-                message.reply_text("Antiflood has been disabled{}.".format(chat_name), parse_mode=ParseMode.HTML)
+                message.reply_text("Antiflood devre dışı bırakıldı{}.".format(chat_name), parse_mode=ParseMode.HTML)
                 log_message = (f"<b>{html.escape(chat.title)}:</b>\n"
                                f"#SETFLOOD\n"
                                f"<b>Admin</b>: {mention_html(user.id, user.first_name)}\n"
-                               f"Disabled antiflood.")
+                               f"Kapalı antiflood.")
 
                 return log_message
             elif amount < 3:
@@ -142,16 +142,16 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
 
             else:
                 sql.set_flood(chat.id, amount)
-                message.reply_text("Antiflood has been updated and set to {}{}".format(amount, chat_name),
+                message.reply_text("Antiflood güncellendi ve {}{}".format(amount, chat_name),
                                    parse_mode=ParseMode.HTML)
                 log_message = (f"<b>{html.escape(chat.title)}:</b>\n"
                                f"#SETFLOOD\n"
                                f"<b>Admin</b>: {mention_html(user.id, user.first_name)}\n"
-                               f"Set antiflood to <code>{amount}</code>.")
+                               f"Antifloodu ayarla <code>{amount}</code>.")
 
                 return log_message
         else:
-            message.reply_text("Unrecognised argument - please use a number, 'off', or 'no'.")
+            message.reply_text("Tanınmayan argüman - lütfen bir sayı kullanın, 'off', or 'no'.")
 
     return log_message
 
@@ -171,10 +171,10 @@ def flood(bot: Bot, update: Update):
     limit = sql.get_flood_limit(chat.id)
 
     if limit == 0:
-        update.effective_message.reply_text(f"I'm not currently enforcing flood control{chat_name}!",
+        update.effective_message.reply_text(f"Şu anda taşkın kontrolünü zorlamıyorum{chat_name}!",
                                             parse_mode=ParseMode.HTML)
     else:
-        update.effective_message.reply_text(f"I'm currently muting users if they send "
+        update.effective_message.reply_text(f"Flood Ayarı 0 ise kapalı olur 3 ten büyük olmalı "
                                             f"more than {limit} consecutive messages{chat_name}.",
                                             parse_mode=ParseMode.HTML)
 
@@ -186,18 +186,18 @@ def __migrate__(old_chat_id, new_chat_id):
 def __chat_settings__(chat_id, user_id):
     limit = sql.get_flood_limit(chat_id)
     if limit == 0:
-        return "*Not* currently enforcing flood control."
+        return "*Şu anda * taşkın kontrolünü zorlamıyor."
     else:
-        return "Antiflood is set to `{}` messages.".format(limit)
+        return "Antiflood şuna ayarlandı `{}` messages.".format(limit)
 
 
 __help__ = """
- • `/flood`*:* Get the current flood control setting
+ • `/flood`*:*Geçerli taşkın kontrolü ayarını alma
 
 *Admins only:*
- • `/setflood <int/'no'/'off'>`*:* enables or disables flood control
- *Example:* `/setflood 10`
- This will mute users if they send more than 10 messages in a row, bots are ignored.
+ • `/setflood <int/'no'/'off'>`*:* taşkın kontrolünü etkinleştirir veya devre dışı bırakır
+ *Örnek:* `/setflood 10`
+Bu, kullanıcıları arka arkaya 10'dan fazla mesaj gönderirse susturur, botlar yok sayılır.
 """
 
 FLOOD_BAN_HANDLER = MessageHandler(Filters.all & ~Filters.status_update & Filters.group, check_flood)
