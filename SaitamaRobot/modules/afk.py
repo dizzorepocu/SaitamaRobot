@@ -46,14 +46,14 @@ def no_longer_afk(bot: Bot, update: Update):
         firstname = update.effective_user.first_name
         try:        
             options = [
-            '{} is here!',
-            '{} is back!',
-            '{} is now in the chat!',
-            '{} is awake!',
-            '{} is back online!',
-            '{} is finally here!',
-            'Welcome back! {}',
-            'Where is {}?\nIn the chat!'
+            '{} burada!',
+            '{} geri döndü!',
+            '{} şuada sohbette!',
+            '{} şuanda uyandı!',
+            '{} şuanda aktif!',
+            '{} sonunda döndün!',
+            'Tekrar Hoşgeldin! {}',
+            'Nerelerdeydin {}?\nMesajlaş şimdi!'
                     ]
             chosen_option = random.choice(options)
             update.effective_message.reply_text(chosen_option.format(firstname))
@@ -128,9 +128,9 @@ def check_afk(bot, update, user_id, fst_name, userc_id):
 
 
 __help__ = """
- • `/afk <reason>`*:* mark yourself as AFK(away from keyboard).
- • `brb <reason>`*:* same as the afk command - but not a command.
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
+ • `/afk <sebep>`*:* Meşgulseniz bu komut ile bildirebilirsiniz.
+ • `brb <sebep>`*:* afk komutuyla aynı - ancak bir komut değil.
+AFK olarak işaretlendiğinde, herhangi bir sözü, uygun olmadığınızı belirten bir mesajla cevaplandırılacaktır.!
 """
 
 AFK_HANDLER = DisableAbleCommandHandler("afk", afk)
