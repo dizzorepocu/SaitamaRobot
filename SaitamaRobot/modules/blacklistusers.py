@@ -30,24 +30,24 @@ def bl_user(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if user_id == bot.id:
-        message.reply_text("How am I supposed to do my work if I am ignoring myself?")
+        message.reply_text("Kendimi görmezden gelirsem işimi nasıl yapmam gerekir?")
         return ""
 
     if user_id in BLACKLISTWHITELIST:
-        message.reply_text("No!\nNoticing Disasters is my job.")
+        message.reply_text("Hayır! \nBazı Felaketler benim işim.")
         return ""
 
     try:
         target_user = bot.get_chat(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user.")
+        if excp.message == "Kullanıcı Bulunamadı":
+            message.reply_text("Bu kullanıcıyı bulamıyorum.")
             return ""
         else:
             raise
 
     sql.blacklist_user(user_id, reason)
-    message.reply_text("I shall ignore the existence of this user!")
+    message.reply_text("Bu kullanıcının varlığını görmezden geleceğim!")
     log_message = (f"#BLACKLIST\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
                    f"<b>User:</b> {mention_html(target_user.id, target_user.first_name)}")
@@ -67,18 +67,18 @@ def unbl_user(bot: Bot, update: Update, args: List[str]) -> str:
     user_id = extract_user(message, args)
 
     if not user_id:
-        message.reply_text("I doubt that's a user.")
+        message.reply_text("Bunun bir kullanıcı olduğundan şüpheliyim.")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I always notice myself.")
+        message.reply_text("Kendimi hep farkettim.")
         return ""
 
     try:
         target_user = bot.get_chat(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user.")
+        if excp.message == "Kullanıcı Bulunamadı":
+            message.reply_text("Bu kullanıcıyı bulamıyorum.")
             return ""
         else:
             raise
@@ -94,7 +94,7 @@ def unbl_user(bot: Bot, update: Update, args: List[str]) -> str:
         return log_message
 
     else:
-        message.reply_text("I am not ignoring them at all though!")
+        message.reply_text("Yine de onları görmezden gelmiyorum!")
         return ""
 
 
@@ -115,7 +115,7 @@ def bl_users(bot: Bot, update: Update):
 
     message = "<b>Blacklisted Users</b>\n"
     if not users:
-        message += "Noone is being ignored as of yet."
+        message += "Henüz kimse yok sayılmıyor."
     else:
         message += '\n'.join(users)
 
@@ -131,7 +131,7 @@ def __user_info__(user_id):
         text = text.format("Yes")
         reason = sql.get_reason(user_id)
         if reason:
-            text += f"\nReason: <code>{reason}</code>"
+            text += f"\nSebepler: <code>{reason}</code>"
     else:
         text = text.format("No")
 
