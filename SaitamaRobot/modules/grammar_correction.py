@@ -48,7 +48,7 @@ def translate(bot: Bot, update: Update):
 
 
 __help__ = """
- • Replying `/t` to a message will produce the grammar corrected version of it.
+ • yanıtlama `/t` bir iletiye dilbilgisi düzeltilmiş sürümünü üretecek.
 """
 
 __mod_name__ = "Grammar Correction"
