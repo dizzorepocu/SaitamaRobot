@@ -39,13 +39,13 @@ def generate_time(to_find: str, findtype: List[str]) -> str:
                 break
 
     try:
-        result = (f"<b>Country :</b> <code>{country_name}</code>\n"
-                  f"<b>Zone Name :</b> <code>{country_zone}</code>\n"
-                  f"<b>Country Code :</b> <code>{country_code}</code>\n"
-                  f"<b>Daylight saving :</b> <code>{daylight_saving}</code>\n"
-                  f"<b>Day :</b> <code>{current_day}</code>\n"
-                  f"<b>Current Time :</b> <code>{current_time}</code>\n"
-                  f"<b>Current Date :</b> <code>{current_date}</code>")
+        result = (f"<b>Şehir :</b> <code>{country_name}</code>\n"
+                  f"<b>Bölge Adı :</b> <code>{country_zone}</code>\n"
+                  f"<b>Ülke Kodu :</b> <code>{country_code}</code>\n"
+                  f"<b>Yaz saati uygulaması :</b> <code>{daylight_saving}</code>\n"
+                  f"<b>Gün :</b> <code>{current_day}</code>\n"
+                  f"<b>Şimdiki zaman :</b> <code>{current_time}</code>\n"
+                  f"<b>Geçerli tarih :</b> <code>{current_date}</code>")
     except:
         result = None
 
@@ -59,9 +59,9 @@ def gettime(bot: Bot, update: Update):
     try:
         query = message.text.strip().split(" ", 1)[1]
     except:
-        message.reply_text("Provide a country name/abbreviation/timezone to find.")
+        message.reply_text("Bulmak için bir ülke adı /abbreviatio /timezone dilimi girin.")
         return
-    send_message = message.reply_text(f"Finding timezone info for <b>{query}</b>", parse_mode=ParseMode.HTML)
+    send_message = message.reply_text(f"İçin saat dilimi bilgilerini bulma <b>{query}</b>", parse_mode=ParseMode.HTML)
 
     query_timezone = query.lower()
     if len(query_timezone) == 2:
@@ -70,16 +70,16 @@ def gettime(bot: Bot, update: Update):
         result = generate_time(query_timezone, ["zoneName", "countryName"])
 
     if not result:
-        send_message.edit_text(f"Timezone info not available for <b>{query}</b>", parse_mode=ParseMode.HTML)
+        send_message.edit_text(f"Saat dilimi bilgisi mevcut değil <b>{query}</b>", parse_mode=ParseMode.HTML)
         return
 
     send_message.edit_text(result, parse_mode=ParseMode.HTML)
 
 
 __help__ = """
- • `/time <query>`*:* Gives information about a timezone.
+ • `/time <sorgu>`*:*Bir saat dilimi hakkında bilgi verir.
 
-*Available queries:* Country Code/Country Name/Timezone Name
+*Kullanılabilir sorgular:* Ülke Kodu / Ülke Adı / Saat Dilimi Adı
 """
 
 TIME_HANDLER = DisableAbleCommandHandler("time", gettime)
