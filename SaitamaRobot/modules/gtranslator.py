@@ -102,26 +102,26 @@ def totranslate(bot: Bot, update: Update):
                     parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(text, dest=dest_lang, src=source_lang)
-                message.reply_text("Translated from `{}` to `{}`:\n`{}`".format(source_lang, dest_lang, tekstr.text),
+                message.reply_text("Tarafından çevrildi `{}` to `{}`:\n`{}`".format(source_lang, dest_lang, tekstr.text),
                                    parse_mode=ParseMode.MARKDOWN)
 
     except IndexError:
         update.effective_message.reply_text(
-            "Reply to messages or write messages from other languages ​​for translating into the intended language\n\n"
-            "Example: `/tr en ml` to translate from English to Malayalam\n"
-            "Or use: `/tr ml` for automatic detection and translating it into Malayalam.\n"
-            "See [List of Language Codes](t.me/OnePunchSupport/12823) for a list of language codes.",
+            "Mesajları yanıtlayın veya istenen dile tercüme etmek için diğer dillerden mesajlar yazın\n\n"
+            "Örnek: `/trtr ml` İngilizceden Malayalam diline çevirmek için\n"
+            "Veya kullan: `/tr Otomatik algılama ve Malayalam'a tercüme için ml`.\n"
+            "Gör [Dil Kodlarının Listesi](t.me/OnePunchSupport/12823) dil kodlarının listesi için.",
             parse_mode="markdown", disable_web_page_preview=True)
     except ValueError:
-        update.effective_message.reply_text("The intended language is not found!")
+        update.effective_message.reply_text("Amaçlanan dil bulunamadı!")
     else:
         return
 
 
 __help__ = """
-• `/tr` or `/tl` (language code) as reply to a long message.
-*Example:* `/tr en`*:* translates something to english. 
-         `/tr hi-en`*:* translates hindi to english.
+• `/tr`veya uzun bir mesaja cevap olarak `/ tl` (dil kodu).
+*Örnek:* `/tr en`*:* bir şeyi ingilizceye çevirir. 
+         `/tr hi-en`*:* Hintçeyi İngilizceye çevirir.
 """
 
 TRANSLATE_HANDLER = DisableAbleCommandHandler(["tr", "tl"], totranslate)
