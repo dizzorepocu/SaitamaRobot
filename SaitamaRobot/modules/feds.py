@@ -1730,52 +1730,52 @@ def get_chat(chat_id, chat_data):
 
 @run_async
 def fed_owner_help(bot: Bot, update: Update):
-   update.effective_message.reply_text("""*👑 Fed Owner Only:*
- • `/newfed <fed_name>`*:* Creates a Federation, One allowed per user. Can also be used to rename the Fed. (max. 64 chars)
- • `/delfed <fed_id>`*:* Delete a Federation, and any information related to it. Will not cancel blocked users.
- • `/fpromote <user>`*:* Assigns the user as a federation admin. Enables all commands for the user under `Fed Admins`.
- • `/fdemote  <user>`*:* Drops the User from the admin Federation to a normal User.
- • `/subfed <fed_id>`*:* Subscribes to a given fed ID, bans from that subscribed fed will also happen in your fed.
- • `/unsubfed <fed_id>`*:* Unsubscribes to a given fed ID.
- • `/setfedlog <fed_id>`*:* Sets the group as a fed log report base for the federation.
- • `/unsetfedlog <fed_id>`*:* Removed the group as a fed log report base for the federation.
- • `/fbroadcast <message>`*:* Broadcasts a messages to all groups that have joined your fed.
- • `/fedsubs`*:* Shows the feds your group is subscribed to. `(broken rn)`""", parse_mode = ParseMode.MARKDOWN)
+   update.effective_message.reply_text("""*👑 Yalnızca Fed Sahibi:*
+ • `/newfed <fed_name>`*:* Kullanıcı başına izin verilen bir Federasyon oluşturur. Fed adını değiştirmek için de kullanılabilir. (max. 64 karakter)
+ • `/delfed <fed_id>`*:* Bir Federasyonu ve bununla ilgili bilgileri silin. Engellenen kullanıcıları iptal etmeyecek.
+ • `/fpromote <user>`*:* Kullanıcıyı bir federasyon yöneticisi olarak atar. `Fed Yöneticileri 'altında kullanıcı için tüm komutları etkinleştirir.
+ • `/fdemote  <user>`*:* Kullanıcıyı Yönetici Federasyonundan normal bir kullanıcıya bırakır.
+ • `/subfed <fed_id>`*:* Belirli bir beslenen kimliğe abone olursanız, bu beslenen beslemenin yasakları da beslemenizde gerçekleşir.
+ • `/unsubfed <fed_id>`*:* Belirli bir beslenen kimliğe olan aboneliği iptal eder.
+ • `/setfedlog <fed_id>`*:* Grubu, federasyon için bir beslemeli günlük raporu tabanı olarak ayarlar.
+ • `/unsetfedlog <fed_id>`*:* Grubu, federasyon için bir beslemeli günlük raporu tabanı olarak kaldırdı.
+ • `/fbroadcast <message>`*:* Fedinize katılan tüm gruplara mesaj yayınlar.
+ • `/fedsubs`*:* Grubunuzun abone olduğu hakları gösterir. `(kırık rn)`""", parse_mode = ParseMode.MARKDOWN)
    
 @run_async
 def fed_admin_help(bot: Bot, update: Update):
-   update.effective_message.reply_text("""*🔱 Fed Admins:*
- • `/fban <user> <reason>`*:* Fed bans a user.
- • `/unfban <user> <reason>`*:* Removes a user from a fed ban.
- • `/fedinfo <fed_id>`*:* Information about the specified Federation.
- • `/joinfed <fed_id>`*:* Join the current chat to the Federation. Only chat owners can do this. Every chat can only be in one Federation.
- • `/leavefed <fed_id>`*:* Leave the Federation given. Only chat owners can do this.
- • `/setfrules <rules>`*:* Arrange Federation rules.
- • `/fednotif <on/off>`*:* Federation settings not in PM when there are users who are fbaned/unfbanned.
- • `/frules`*:* See Federation regulations.
- • `/fedadmins`*:* Show Federation admin.
- • `/fbanlist`*:* Displays all users who are victimized at the Federation at this time.
- • `/fedchats`*:* Get all the chats that are connected in the Federation.\n""", parse_mode = ParseMode.MARKDOWN)
+   update.effective_message.reply_text("""*🔱 Fed Adminleri:*
+ • `/fban <user> <reason>`*:* Fed bir kullanıcıyı yasaklar.
+ • `/unfban <user> <reason>`*:* Bir kullanıcıyı beslenen yasağı kaldırır.
+ • `/fedinfo <fed_id>`*:* Belirtilen Federasyon hakkında bilgi.
+ • `/joinfed <fed_id>`*:* Federasyon ile mevcut sohbete katılın. Bunu yalnızca sohbet sahipleri yapabilir. Her sohbet yalnızca bir Federasyonda olabilir.
+ • `/leavefed <fed_id>`*:*Federasyonu ver. Bunu yalnızca sohbet sahipleri yapabilir.
+ • `/setfrules <rules>`*:* Federasyon kurallarını düzenleyin.
+ • `/fednotif <on/off>`*:* fbaned /unfbaned kullanıcılar olduğunda Federasyon ayarları PM'de değil.
+ • `/frules`*:* Federasyon düzenlemelerine bakınız.
+ • `/fedadmins`*:* Federasyon yöneticisini göster.
+ • `/fbanlist`*:* Şu anda Federasyonda mağdur olan tüm kullanıcıları görüntüler.
+ • `/fedchats`*:* Federasyona bağlı tüm sohbetleri alın.\n""", parse_mode = ParseMode.MARKDOWN)
    
 @run_async
 def fed_user_help(bot: Bot, update: Update):
-   update.effective_message.reply_text("""*🎩 Any user:*
-• `/fbanstat`*:* Shows if you/or the user you are replying to or their username is fbanned somewhere or not.
-• `/chatfed `*:* See the Federation in the current chat.\n""", parse_mode = ParseMode.MARKDOWN)   
+   update.effective_message.reply_text("""*🎩 Herhangi bir kullanıcı:*
+• `/fbanstat`*:* Siz / veya yanıtladığınız kullanıcının veya kullanıcı adının bir yerlerde yasaklanıp yasaklanmadığını gösterir.
+• `/chatfed `*:* Mevcut sohbette Federasyon'a bakın.\n""", parse_mode = ParseMode.MARKDOWN)   
 
 __mod_name__ = "Federations"
 
 __help__ = """
-Everything is fun, until a spammer starts entering your group, and you have to block it. Then you need to start banning more, and more, and it hurts.
-But then you have many groups, and you don't want this spammer to be in one of your groups - how can you deal? Do you have to manually block it, in all your groups?\n
-*No longer!* With Federation, you can make a ban in one chat overlap with all other chats.\n
-You can even designate federation admins, so your trusted admin can ban all the spammers from chats you want to protect.\n
+İstenmeyen posta gönderenler grubunuza girmeye başlayana ve onu engellemeniz gerekene kadar her şey eğlencelidir. O zaman daha fazla ve daha fazla yasaklamaya başlamanız gerekiyor ve acıyor.
+Ama sonra birçok grubunuz var ve bu spam göndericinin gruplarınızdan birinde olmasını istemiyorsunuz - nasıl başa çıkabilirsiniz? Tüm gruplarınızda manuel olarak engellemeniz mi gerekiyor? \ N
+* Artık yok! * Federasyon ile, diğer tüm sohbetlerle tek bir sohbet örtüşmesini yasaklayabilirsiniz.\n
+Federasyon yöneticilerini bile atayabilirsiniz, böylece güvenilir yöneticiniz tüm spam göndericileri korumak istediğiniz sohbetlerden yasaklayabilir.\n
 
-*Commands:*\n
-Feds are now divided into 3 sections for your ease. 
-• `/fedownerhelp`*:* Provides help for fed creation and owner only commands.
-• `/fedadminhelp`*:* Provides help for fed administration commands.
-• `/feduserhelp`*:* Provides help for commands anyone can use.
+*Komutlar:*\n
+Fed'ler artık rahatınız için 3 bölüme ayrılmıştır. 
+• `/fedownerhelp`*:* fed oluşturma ve yalnızca sahip komutları için yardım sağlar.
+• `/fedadminhelp`*:* fed yönetim komutları için yardım sağlar.
+• `/feduserhelp`*:* Herkesin kullanabileceği komutlar için yardım sağlar.
 
 """
 
