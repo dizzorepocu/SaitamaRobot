@@ -19,19 +19,19 @@ def paste(bot: Bot, update: Update, args: List[str]):
         data = message.text.split(None, 1)[1]
 
     else:
-        message.reply_text("What am I supposed to do with this?")
+        message.reply_text("Bununla ne yapmam gerekiyor?")
         return
 
     key = requests.post('https://nekobin.com/api/documents', json={"content": data}).json().get('result').get('key')
 
     url = f'https://nekobin.com/{key}'
 
-    reply_text = f'Nekofied to *Nekobin* : {url}'
+    reply_text = f'*Nekobin olarak doğrulanmadı* : {url}'
 
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 __help__ = """
- • `/paste`*:* Do a paste at `neko.bin`
+ • `/paste`*:* Yapıştırın `neko.bin`
 """
 
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
