@@ -48,9 +48,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
                 try:
                     bot.forward_message(chat_id=chat_id, from_chat_id=MESSAGE_DUMP, message_id=note.value)
                 except BadRequest as excp:
-                    if excp.message == "Message to forward not found":
-                        message.reply_text("This message seems to have been lost - I'll remove it "
-                                           "from your notes list.")
+                    if excp.message == "Yönlendirme mesajı bulunamadı":
+                        message.reply_text("Bu mesaj kaybolmuş gibi görünüyor - kaldıracağım "
+                                           "not listenizden.")
                         sql.rm_note(chat_id, notename)
                     else:
                         raise
@@ -58,11 +58,11 @@ def get(bot, update, notename, show_none=True, no_format=False):
                 try:
                     bot.forward_message(chat_id=chat_id, from_chat_id=chat_id, message_id=note.value)
                 except BadRequest as excp:
-                    if excp.message == "Message to forward not found":
-                        message.reply_text("Looks like the original sender of this note has deleted "
-                                           "their message - sorry! Get your bot admin to start using a "
-                                           "message dump to avoid this. I'll remove this note from "
-                                           "your saved notes.")
+                    if excp.message == "Yönlendirme mesajı bulunamadı":
+                        message.reply_text("Bu notun orijinal göndereni silinmiş gibi görünüyor "
+                                           "onların mesajı - üzgünüm! Bot yöneticinizi bir "
+                                           "Bunu önlemek için mesaj dökümü. Bu notum "
+                                           "kayıtlı notun.")
                         sql.rm_note(chat_id, notename)
                     else:
                         raise
@@ -91,22 +91,22 @@ def get(bot, update, notename, show_none=True, no_format=False):
 
             except BadRequest as excp:
                 if excp.message == "Entity_mention_user_invalid":
-                    message.reply_text("Looks like you tried to mention someone I've never seen before. If you really "
-                                       "want to mention them, forward one of their messages to me, and I'll be able "
-                                       "to tag them!")
+                    message.reply_text("Daha önce hiç görmediğim birinden bahsetmeye çalıştığın anlaşılıyor. Eğer gerçekten "
+                                       "onlardan bahsetmek istiyorum, mesajlarından birini bana ilet, ben de "
+                                       "etiketlemek için!")
                 elif FILE_MATCHER.match(note.value):
-                    message.reply_text("This note was an incorrectly imported file from another bot - I can't use "
-                                       "it. If you really need it, you'll have to save it again. In "
-                                       "the meantime, I'll remove it from your notes list.")
+                    message.reply_text("Bu not başka bir bottan yanlış içe aktarılmış bir dosyaydı - kullanamıyorum "
+                                       "o. Gerçekten ihtiyacınız varsa, tekrar kaydetmeniz gerekir. İçinde "
+                                       "bu arada not listenizden kaldıracağım.")
                     sql.rm_note(chat_id, notename)
                 else:
-                    message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                       f"{SUPPORT_CHAT} if you can't figure out why!")
-                    LOGGER.exception("Could not parse message #%s in chat %s", notename, str(chat_id))
-                    LOGGER.warning("Message was: %s", str(note.value))
+                    message.reply_text("Bu not yanlış biçimlendirildiği için gönderilemedi. Ask in "
+                                       f"{SUPPORT_CHAT} nedenini anlayamıyorsan!")
+                    LOGGER.exception("#%S mesajı sohbette ayrıştırılamadı %s", notename, str(chat_id))
+                    LOGGER.warning("Mesaj önceki değeri: %s", str(note.value))
         return
     elif show_none:
-        message.reply_text("This note doesn't exist")
+        message.reply_text("Bu not mevcut değil")
 
 
 @run_async
@@ -116,7 +116,7 @@ def cmd_get(bot: Bot, update: Update, args: List[str]):
     elif len(args) >= 1:
         get(bot, update, args[0].lower(), show_none=True)
     else:
-        update.effective_message.reply_text("Get rekt")
+        update.effective_message.reply_text("Rekt al")
 
 
 @run_async
@@ -136,24 +136,24 @@ def save(bot: Bot, update: Update):
     note_name, text, data_type, content, buttons = get_note_type(msg)
     note_name = note_name.lower()
     if data_type is None:
-        msg.reply_text("Dude, there's no note")
+        msg.reply_text("Dostum, not yok")
         return
 
     sql.add_note_to_db(chat_id, note_name, text, data_type, buttons=buttons, file=content)
 
-    msg.reply_text(f"Yas! Added {note_name}.\nGet it with /get {note_name}, or #{note_name}")
+    msg.reply_text(f"Evet Eklendi {note_name}.\nİle al /get {note_name}, or #{note_name}")
 
     if msg.reply_to_message and msg.reply_to_message.from_user.is_bot:
         if text:
-            msg.reply_text("Seems like you're trying to save a message from a bot. Unfortunately, "
-                           "bots can't forward bot messages, so I can't save the exact message. "
-                           "\nI'll save all the text I can, but if you want more, you'll have to "
-                           "forward the message yourself, and then save it.")
+            msg.reply_text("Bir bottan mesaj kaydetmeye çalıştığınız anlaşılıyor. ne yazık ki, "
+                           "botlar bot mesajlarını iletemez, bu yüzden tam mesajı kaydedemiyorum. "
+                           "\nYapabileceğim tüm metni kaydedeceğim, ama daha fazlasını istiyorsan, "
+                           "mesajı kendiniz iletin ve kaydedin.")
         else:
-            msg.reply_text("Bots are kinda handicapped by telegram, making it hard for bots to "
-                           "interact with other bots, so I can't save this message "
-                           "like I usually would - do you mind forwarding it and "
-                           "then saving that new message? Thanks!")
+            msg.reply_text("Botlar telgrafla biraz özürlü ve botların "
+                           "diğer botlarla etkileşime geçtiğinden bu mesajı kaydedemiyorum "
+                           "genellikle yaptığım gibi - iletmeyi ve "
+                           "sonra bu yeni mesaj kaydedilsin mi? Teşekkürler!")
         return
 
 
@@ -165,9 +165,9 @@ def clear(bot: Bot, update: Update, args: List[str]):
         notename = args[0].lower()
 
         if sql.rm_note(chat_id, notename):
-            update.effective_message.reply_text("Successfully removed note.")
+            update.effective_message.reply_text("Not başarıyla kaldırıldı.")
         else:
-            update.effective_message.reply_text("That's not a note in my database!")
+            update.effective_message.reply_text("Bu benim veritabanımda bir not değil!")
 
 
 @run_async
@@ -183,7 +183,7 @@ def list_notes(bot: Bot, update: Update):
             msg = ""
         msg += note_name
 
-    if msg == "*Notes in chat:*\n":
+    if msg == "*Sohbette notlar:*\n":
         update.effective_message.reply_text("No notes in this chat!")
 
     elif len(msg) != 0:
@@ -207,9 +207,9 @@ def __import_data__(chat_id, data):
         with BytesIO(str.encode("\n".join(failures))) as output:
             output.name = "failed_imports.txt"
             dispatcher.bot.send_document(chat_id, document=output, filename="failed_imports.txt",
-                                         caption="These files/photos failed to import due to originating "
-                                                 "from another bot. This is a telegram API restriction, and can't "
-                                                 "be avoided. Sorry for the inconvenience!")
+                                         caption="Bu dosyalar /photos kaynak nedeniyle içe aktarılamadı "
+                                                 "başka bir bottan. Bu bir telgraf API kısıtlamasıdır ve yapamaz "
+                                                 "kaçınılmalıdır. rahatsızlıktan dolayı özür dileriz!")
 
 
 def __stats__():
@@ -222,24 +222,24 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     notes = sql.get_all_chat_notes(chat_id)
-    return f"There are `{len(notes)}` notes in this chat."
+    return f"There are `{len(notes)}`bu sohbetteki notlar."
 
 
 __help__ = """
- • `/get <notename>`*:* get the note with this notename
- • `#<notename>`*:* same as /get
- • `/notes` or `/saved`*:* list all saved notes in this chat
+ • `/get <notename>`*:* notename ile not al
+ • `#<notename>`*:* ile aynı /get
+ • `/notes` yada `/saved`*:* bu sohbette kaydedilen tüm notları listele
 
-If you would like to retrieve the contents of a note without any formatting, use `/get <notename> noformat`. This can \
-be useful when updating a current note.
+Herhangi bir biçimlendirme olmadan notun içeriğini almak istiyorsanız, kullan `/get <notename> noformat`. Bu \
+güncel bir not güncellenirken faydalı olabilir.
 
 *Admins only:*
- • `/save <notename> <notedata>`*:* saves notedata as a note with name notename
-A button can be added to a note by using standard markdown link syntax - the link should just be prepended with a \
-`buttonurl:` section, as such: `[somelink](buttonurl:example.com)`. Check `/markdownhelp` for more info.
- • `/save <notename>`*:* save the replied message as a note with name notename
- • `/clear <notename>`*:* clear note with this name
- *Note:* Note names are case-insensitive, and they are automatically converted to lowercase before getting saved.
+ • `/save <notename> <notedata>`*:*notedata adını notename adlı bir not olarak kaydeder
+Standart işaretleme bağlantısı sözdizimi kullanılarak bir nota bir düğme eklenebilir - bağlantıya yalnızca \
+`buttonurl:` bölüm gibi: `[somelink](buttonurl:example.com)`. kontrol `/markdownhelp` daha fazla bilgi için.
+ • `/save <notename>`*:* cevaplanan mesajı notename adıyla bir not olarak kaydet
+ • `/clear <notename>`*:* bu isimle net not
+ *Note:* Not adları büyük / küçük harfe duyarlı değildir ve kaydedilmeden önce otomatik olarak küçük harfe dönüştürülür.
 """
 
 __mod_name__ = "Notes"
