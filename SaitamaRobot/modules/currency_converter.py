@@ -15,13 +15,13 @@ def convert(bot: Bot, update: Update):
         try:
             orig_cur = args[2].upper()
         except IndexError:
-            update.effective_message.reply_text("You forgot to mention the currency code.")
+            update.effective_message.reply_text("Para birimi kodundan bahsetmeyi unuttun.")
             return
 
         try:
             new_cur = args[3].upper()
         except IndexError:
-            update.effective_message.reply_text("You forgot to mention the currency code to convert into.")
+            update.effective_message.reply_text("Dönüştürmek için para birimi kodunu belirtmeyi unuttunuz.")
             return
 
         request_url = (f"https://www.alphavantage.co/query"
@@ -31,9 +31,9 @@ def convert(bot: Bot, update: Update):
                        f"&apikey={CASH_API_KEY}")
         response = requests.get(request_url).json()
         try:
-            current_rate = float(response['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+            current_rate = float(response['Gerçek Zamanlı Döviz Kuru']['5. Döviz kuru'])
         except KeyError:
-            update.effective_message.reply_text(f"Currency Not Supported.")
+            update.effective_message.reply_text(f"Para Birimi Desteklenmiyor.")
             return
         new_cur_amount = round(orig_cur_amount * current_rate, 5)
         update.effective_message.reply_text(f"{orig_cur_amount} {orig_cur} = {new_cur_amount} {new_cur}")
@@ -42,9 +42,9 @@ def convert(bot: Bot, update: Update):
 
 
 __help__ = """
- • `/cash`*:* currency converter
- *Example syntax:* `/cash 1 USD INR`
- *Outout:* `1.0 USD = 75.505 INR`
+ • `/cash`*:* döviz Çevirici
+ *Örnek sözdizimi:* `/cash 1 USD INR`
+ *Dışarı dışarı:* `1.0 USD = 75.505 INR`
 
 """
 
