@@ -38,9 +38,9 @@ def list_handlers(bot: Bot, update: Update):
 
     if not all_handlers:
         if update_chat_title == message_chat_title:
-            update.effective_message.reply_text("No filters are active here!")
+            update.effective_message.reply_text("Burada etkin filtre yok!")
         else:
-            update.effective_message.reply_text(f"No filters are active in <b>{update_chat_title}</b>!",
+            update.effective_message.reply_text(f"Etkin filtre yok <b>{update_chat_title}</b>!",
                                                 parse_mode=telegram.ParseMode.HTML)
         return
 
@@ -89,7 +89,7 @@ def filters(bot: Bot, update: Update):
         content, buttons = button_markdown_parser(extracted[1], entities=msg.parse_entities(), offset=offset)
         content = content.strip()
         if not content:
-            msg.reply_text("There is no note message - You can't JUST have buttons, you need a message to go with it!")
+            msg.reply_text("Not mesajı yok - SADECE düğmeleriniz olamaz, onunla gitmek için bir mesaja ihtiyacınız var!")
             return
 
     elif msg.reply_to_message and msg.reply_to_message.sticker:
@@ -117,10 +117,10 @@ def filters(bot: Bot, update: Update):
         is_video = True
 
     else:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text("Ne ile cevap vereceğinizi belirtmediniz!")
         return
     if infinite_loop_check(keyword):
-        msg.reply_text("I'm afraid I can't add that regex")
+        msg.reply_text("Korkarım şu normal ifadeyi ekleyemiyorum")
         return
     # Add the filter
     # Note: perhaps handlers can be removed somehow using sql.get_chat_filters
@@ -131,7 +131,7 @@ def filters(bot: Bot, update: Update):
     sql.add_filter(chat.id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
 
-    msg.reply_text("Handler '{}' added!".format(keyword))
+    msg.reply_text("'{}' İşleyicisi eklendi!".format(keyword))
     raise DispatcherHandlerStop
 
 
@@ -149,17 +149,16 @@ def stop_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_triggers(chat.id)
 
     if not chat_filters:
-        msg.reply_text("No filters are active here!")
+        msg.reply_text("Burada etkin filtre yok!")
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat.id, args[1])
-            msg.reply_text("Yep, I'll stop replying to that.")
+            msg.reply_text("Evet, buna cevap vermeyi bırakacağım.")
             raise DispatcherHandlerStop
 
-    msg.reply_text("That's not a current filter - run /filters for all active filters.")
-
+    msg.reply_text("Bu geçerli bir filtre değil - tüm etkin filtreler için çalıştır /filters.")
 
 @run_async
 def reply_filter(bot: Bot, update: Update):
@@ -201,19 +200,19 @@ def reply_filter(bot: Bot, update: Update):
                                        disable_web_page_preview=True,
                                        reply_markup=keyboard)
                 except BadRequest as excp:
-                    if excp.message == "Unsupported url protocol":
-                        message.reply_text("You seem to be trying to use an unsupported url protocol. Telegram "
-                                           "doesn't support buttons for some protocols, such as tg://. Please try "
-                                           f"again, or ask in {SUPPORT_CHAT} for help.")
-                    elif excp.message == "Reply message not found":
+                    if excp.message == "Desteklenmeyen URL protokolü":
+                        message.reply_text("Desteklenmeyen bir URL protokolü kullanmaya çalışıyor gibi görünüyorsunuz. Telegram "
+                                           "bazı protokoller için düğmeleri desteklemiyor, gibi tg://. Please try "
+                                           f"tekrar, ya da sor {SUPPORT_CHAT} yardım için.")
+                    elif excp.message == "Yanıt mesajı bulunamadı":
                         bot.send_message(chat.id, filt.reply, parse_mode=ParseMode.MARKDOWN,
                                          disable_web_page_preview=True,
                                          reply_markup=keyboard)
                     else:
-                        message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                           f"{SUPPORT_CHAT} if you can't figure out why!")
-                        LOGGER.warning("Message %s could not be parsed", str(filt.reply))
-                        LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
+                        message.reply_text("Bu not yanlış biçimlendirildiği için gönderilemedi. Sor"
+                                           f"{SUPPORT_CHAT} nedenini anlayamıyorsan!")
+                        LOGGER.warning("%S iletisi ayrıştırılamadı", str(filt.reply))
+                        LOGGER.exception("%S sohbetindeki %s filtresi ayrıştırılamadı", str(filt.keyword), str(chat.id))
 
             else:
                 # LEGACY - all new filters will have has_markdown set to True.
@@ -222,7 +221,7 @@ def reply_filter(bot: Bot, update: Update):
 
 
 def __stats__():
-    return "{} filters, across {} chats.".format(sql.num_filters(), sql.num_chats())
+    return "{} filtreler {} sohbetler.".format(sql.num_filters(), sql.num_chats())
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -231,22 +230,22 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     cust_filters = sql.get_chat_triggers(chat_id)
-    return "There are currently `{}` custom filters here.".format(len(cust_filters))
+    return "Şu anda burada  `{}`özel filtre var.".format(len(cust_filters))
 
 
 __help__ = """
- • `/filters`*:* list all active filters in this chat.
+ • `/filters`*:* bu sohbetteki tüm etkin filtreleri listele.
 
 *Admins only:*
- • `/filter <keyword> <reply message>`*:* adds a filter to this chat. The bot will now reply that message whenever 'keyword'\
-is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. \
-If you want your keyword to be a sentence, use quotes. 
-*Example:* `/filter "hey there" How you doin?`
- • `/stop <filter keyword>`*:* stop that filter.
-Note: Filters now have regex so any existing filters you have are case insensitive by default.\
-To save case insensitive regex use\
-`/filter "(?i) my trigger word" my reply that ignores case`\
-In case you require more advanced regex help, please reach out to us at @OnePunchSupport. 
+ • `/filter <keyword> <reply message>`*:* bu sohbete bir filtre ekler. Bot artık 'anahtar kelime' olduğunda bu iletiyi yanıtlayacaktır\
+belirtilir. Bir anahtar kelimeye sahip bir çıkartmaya yanıt verirseniz, bot bu çıkartmayla yanıt verir. \
+Anahtar kelimenizin cümle olmasını istiyorsanız tırnak işareti kullanın. 
+*Örnek:* `/filter "hey orada "Nasılsın?`
+ • `/stop <filter keyword>`*:* bu filtreyi durdur.
+Note: Filtreler artık normal ifadeye sahip olduğundan, mevcut tüm filtreler varsayılan olarak büyük / küçük harfe duyarlı değildir.\
+Büyük / küçük harfe duyarlı olmayan normal ifadeyi kullanmak için\
+`/filter "(?i) tetikleyici kelimem "davayı yok sayan cevabım`\
+Daha gelişmiş regex yardımına ihtiyacınız varsa, lütfen bize ulaşın @ElsaSupport. 
 """
 
 FILTER_HANDLER = CommandHandler("filter", filters)
