@@ -17,26 +17,26 @@ ELEVATED_USERS_FILE = os.path.join(os.getcwd(), 'SaitamaRobot/elevated_users.jso
 
 def check_user_id(user_id: int, bot: Bot) -> Optional[str]:
     if not user_id:
-        reply = "That...is a chat! baka ka omae?"
+        reply = "Bu ... bir sohbet! Baka ka omae?"
 
     elif user_id == bot.id:
-        reply = "This does not work that way."
+        reply = "Bu böyle çalışmıyor."
 
     else:
         reply = None
     return reply
 
 #I added extra new lines
-disasters = """ Saitama has bot access levels we call as *"Disaster Levels"*
-\n*Heroes Association* - Devs who can access the bots server and can execute, edit, modify bot code. Can also manage other Disasters
-\n*God* - Only one exists, bot owner. 
-Owner has complete bot access, including bot adminship in chats Saitama is at.
-\n*Dragons* - Have super user access, can gban, manage disasters lower than them and are admins in Saitama.
-\n*Demons* - Have access go globally ban users across Saitama.
-\n*Tigers* - Same as wolves but can unban themselves if banned.
-\n*Wolves* - Cannot be banned, muted flood kicked but can be manually banned by admins.
-\n*Disclaimer*: The disaster levels in Saitama are there for troubleshooting, support, banning potential scammers.
-Report abuse or ask us more on these at [Heroes Association](https://t.me/OnePunchSupport).
+disasters = """ ELSA, "" Afet Seviyeleri olarak adlandırdığımız bot erişim seviyelerine sahiptir"*
+\n*Heroes Association * - Bot sunucusuna erişebilen ve bot kodunu çalıştırabilen, düzenleyebilen, değiştirebilen geliştiriciler. Diğer Afetleri de yönetebilir
+\n*Tanrı * - Sadece bir tane var, bot sahibi.
+Sahibinin ELSA'daki sohbetlerdeki bot yönetimi de dahil olmak üzere tam bot erişimi vardır.
+\n*Ejderhalar * - Süper kullanıcı erişimine sahip olabilir, gban yapabilir, felaketleri onlardan daha düşük yönetebilir ve ELSA'da yöneticiler olabilir.
+\n*Şeytanlar * - Erişimi ELSA genelinde küresel olarak yasaklamak gidin.
+\n*Kaplanlar * - Kurtlarla aynıdır, ancak yasaklandığında kendilerini yasaklayabilirler.
+\n*Wolves* - Yasaklanamaz, sessiz sel tekmelenir, ancak yöneticiler tarafından manuel olarak yasaklanabilir.
+\n*Feragat *: ELSA'daki afet seviyeleri sorun giderme, destek ve potansiyel dolandırıcıların yasaklanması için hazırdır.
+Kötüye kullanımı bildirin veya bu konuda bize daha fazla bilgi sorun: [ELSA Support](https://t.me/ElsaSupport).
 """
 # do not async, not a handler 
 def send_disasters(update):
@@ -63,16 +63,16 @@ def addsudo(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        message.reply_text("This member is already a Dragon Disaster")
+        message.reply_text("Bu üye zaten bir Ejderha Felaketi")
         return ""
 
     if user_id in SUPPORT_USERS:
-        rt += "Requested HA to promote a Demon Disaster to Dragon."
+        rt += "HA'dan Ejderhaya Şeytan Afetini tanıtmasını istedi."
         data['supports'].remove(user_id)
         SUPPORT_USERS.remove(user_id)
 
     if user_id in WHITELIST_USERS:
-        rt += "Requested HA to promote a Wolf Disaster to Dragon."
+        rt += "HA'dan Ejderhaya Kurt Felaketini Teşvik Etmesini İstedi."
         data['whitelists'].remove(user_id)
         WHITELIST_USERS.remove(user_id)
 
@@ -83,7 +83,7 @@ def addsudo(bot: Bot, update: Update, args: List[str]) -> str:
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + "\nSuccessfully set Disaster level of {} to Dragon!".format(user_member.first_name))
+        rt + "\n{} Afet seviyesini başarıyla Dragon olarak ayarlayın!".format(user_member.first_name))
 
     log_message = (f"#SUDO\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
@@ -116,16 +116,16 @@ def addsupport(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        rt += "Requested HA to deomote this Dragon to Demon"
+        rt += "HA'dan bu Ejderhayı Şeytan'a deomote etmesini istedi"
         data['sudos'].remove(user_id)
         SUDO_USERS.remove(user_id)
 
     if user_id in SUPPORT_USERS:
-        message.reply_text("This user is already a Demon Disaster.")
+        message.reply_text("Bu kullanıcı zaten bir Şeytan Felaketi.")
         return ""
 
     if user_id in WHITELIST_USERS:
-        rt += "Requested HA to promote this Wolf Disaster to Demon"
+        rt += "HA'dan bu Kurt Felaketini Şeytan'a tanıtmasını istedi"
         data['whitelists'].remove(user_id)
         WHITELIST_USERS.remove(user_id)
 
@@ -135,7 +135,7 @@ def addsupport(bot: Bot, update: Update, args: List[str]) -> str:
     with open(ELEVATED_USERS_FILE, 'w') as outfile:
         json.dump(data, outfile, indent=4)
 
-    update.effective_message.reply_text(rt + f"\n{user_member.first_name} was added as a Demon Disaster!")
+    update.effective_message.reply_text(rt + f"\n{user_member.first_name} İblis Felaketi olarak eklendi!")
 
     log_message = (f"#SUPPORT\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
@@ -168,17 +168,17 @@ def addwhitelist(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        rt += "This member is a Dragon Disaster, Demoting to Wolf."
+        rt += "Bu üye bir Ejderha Felaketidir, Kurt'a düşkündür."
         data['sudos'].remove(user_id)
         SUDO_USERS.remove(user_id)
 
     if user_id in SUPPORT_USERS:
-        rt += "This user is already a Demon Disaster, Demoting to Wolf."
+        rt += "Bu kullanıcı zaten bir Demon Felaketi, Kurt Demoting."
         data['supports'].remove(user_id)
         SUPPORT_USERS.remove(user_id)
 
     if user_id in WHITELIST_USERS:
-        message.reply_text("This user is already a Wolf Disaster.")
+        message.reply_text("Bu kullanıcı zaten bir Kurt Felaketi.")
         return ""
 
     data['whitelists'].append(user_id)
@@ -188,7 +188,7 @@ def addwhitelist(bot: Bot, update: Update, args: List[str]) -> str:
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + f"\nSuccessfully promoted {user_member.first_name} to a Wolf Disaster!")
+        rt + f"\nSuccessfully promoted {user_member.first_name} kurt felaketi!")
 
     log_message = (f"#WHITELIST\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)} \n"
@@ -221,22 +221,22 @@ def addtiger(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        rt += "This member is a Dragon Disaster, Demoting to Tiger."
+        rt += "Bu üye Tiger'a Adanan Ejderha Felaketi."
         data['sudos'].remove(user_id)
         SUDO_USERS.remove(user_id)
 
     if user_id in SUPPORT_USERS:
-        rt += "This user is already a Demon Disaster, Demoting to Tiger."
+        rt += "Bu kullanıcı zaten Tiger'a indirgeyen bir Demon Felaketi."
         data['supports'].remove(user_id)
         SUPPORT_USERS.remove(user_id)
 
     if user_id in WHITELIST_USERS:
-        rt += "This user is already a Wolf Disaster, Demoting to Tiger."
+        rt += "Bu kullanıcı zaten Tiger'a Adanan bir Kurt Felaketi."
         data['whitelists'].remove(user_id)
         WHITELIST_USERS.remove(user_id)
 
     if user_id in TIGER_USERS:
-        message.reply_text("This user is already a Tiger.")
+        message.reply_text("Bu kullanıcı zaten bir Tiger.")
         return ""
 
     data['tigers'].append(user_id)
@@ -246,7 +246,7 @@ def addtiger(bot: Bot, update: Update, args: List[str]) -> str:
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + f"\nSuccessfully promoted {user_member.first_name} to a Tiger Disaster!")
+        rt + f"\nSuccessfully promoted {user_member.first_name} Kaplan Felaketine!")
 
     log_message = (f"#TIGER\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)} \n"
@@ -278,7 +278,7 @@ def removesudo(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUDO_USERS:
-        message.reply_text("Requested HA to demote this user to Civilian")
+        message.reply_text("HA'dan bu kullanıcıyı Sivil'e indirmesini istedi")
         SUDO_USERS.remove(user_id)
         data['sudos'].remove(user_id)
 
@@ -295,7 +295,7 @@ def removesudo(bot: Bot, update: Update, args: List[str]) -> str:
         return log_message
 
     else:
-        message.reply_text("This user is not a Dragon Disaster!")
+        message.reply_text("Bu kullanıcı bir Ejderha Felaketi değil!")
         return ""
 
 
@@ -319,7 +319,7 @@ def removesupport(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in SUPPORT_USERS:
-        message.reply_text("Requested HA to demote this user to Civilian")
+        message.reply_text("HA'dan bu kullanıcıyı Sivil'e indirmesini istedi")
         SUPPORT_USERS.remove(user_id)
         data['supports'].remove(user_id)
 
@@ -336,7 +336,7 @@ def removesupport(bot: Bot, update: Update, args: List[str]) -> str:
         return log_message
 
     else:
-        message.reply_text("This user is not a Demon level Disaster!")
+        message.reply_text("Bu kullanıcı Demon seviyesinde bir Felaket değil!")
         return ""
 
 
@@ -360,7 +360,7 @@ def removewhitelist(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in WHITELIST_USERS:
-        message.reply_text("Demoting to normal user")
+        message.reply_text("Normal kullanıcıya indirgeme")
         WHITELIST_USERS.remove(user_id)
         data['whitelists'].remove(user_id)
 
@@ -376,7 +376,7 @@ def removewhitelist(bot: Bot, update: Update, args: List[str]) -> str:
 
         return log_message
     else:
-        message.reply_text("This user is not a Wolf Disaster!")
+        message.reply_text("Bu kullanıcı bir kurt felaketi değil!")
         return ""
 
 
@@ -400,7 +400,7 @@ def removetiger(bot: Bot, update: Update, args: List[str]) -> str:
         data = json.load(infile)
 
     if user_id in TIGER_USERS:
-        message.reply_text("Demoting to normal user")
+        message.reply_text("Normal kullanıcıya indirgeme")
         TIGER_USERS.remove(user_id)
         data['tigers'].remove(user_id)
 
@@ -416,14 +416,14 @@ def removetiger(bot: Bot, update: Update, args: List[str]) -> str:
 
         return log_message
     else:
-        message.reply_text("This user is not a Tiger Disaster!")
+        message.reply_text("Bu kullanıcı Tiger Afet değil!")
         return ""
 
 
 @run_async
 @whitelist_plus
 def whitelistlist(bot: Bot, update: Update):
-    reply = "<b>Known Wolf Disasters 🐺:</b>\n"
+    reply = "<b>Bilinen Kurt Afetleri🐺:</b>\n"
     for each_user in WHITELIST_USERS:
         user_id = int(each_user)
         try:
@@ -438,7 +438,7 @@ def whitelistlist(bot: Bot, update: Update):
 @run_async
 @whitelist_plus
 def tigerlist(bot: Bot, update: Update):
-    reply = "<b>Known Tiger Disasters 🐯:</b>\n"
+    reply = "<b>Bilinen Tiger Afetleri 🐯:</b>\n"
     for each_user in TIGER_USERS:
         user_id = int(each_user)
         try:
@@ -452,7 +452,7 @@ def tigerlist(bot: Bot, update: Update):
 @run_async
 @whitelist_plus
 def supportlist(bot: Bot, update: Update):
-    reply = "<b>Known Demon Disasters 👹:</b>\n"
+    reply = "<b>Bilinen Demon Afetleri 👹:</b>\n"
     for each_user in SUPPORT_USERS:
         user_id = int(each_user)
         try:
@@ -467,7 +467,7 @@ def supportlist(bot: Bot, update: Update):
 @whitelist_plus
 def sudolist(bot: Bot, update: Update):
     true_sudo = list(set(SUDO_USERS) - set(DEV_USERS))
-    reply = "<b>Known Dragon Disasters 🐉:</b>\n"
+    reply = "<b>Bilinen Ejderha Felaketleri 🐉:</b>\n"
     for each_user in true_sudo:
         user_id = int(each_user)
         try:
@@ -482,7 +482,7 @@ def sudolist(bot: Bot, update: Update):
 @whitelist_plus
 def devlist(bot: Bot, update: Update):
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
-    reply = "<b>Hero Association Members ⚡️:</b>\n"
+    reply = "<b>Kahraman Derneği Üyeleri ⚡️:</b>\n"
     for each_user in true_dev:
         user_id = int(each_user)
         try:
@@ -494,13 +494,13 @@ def devlist(bot: Bot, update: Update):
 
 
 __help__ = f"""
- • `/heroes`*:* Lists all Hero Association members.
- • `/dragons`*:* Lists all Dragon disasters.
- • `/demons`*:* Lists all Demon disasters.
- • `/tigers`*:* Lists all Tigers disasters.
- • `/wolves`*:* Lists all Wolf disasters.
- *Note:* These commands list users with special bot priveleges and can only be used by them.
- You can visit {SUPPORT_CHAT} to query more about these.
+ • `/heroes`*:* Tüm Hero Association üyelerini listeler.
+ • `/dragons`*:* Tüm Dragon felaketlerini listeler.
+ • `/demons`*:* Tüm Demon felaketlerini listeler.
+ • `/tigers`*:* Tüm Kaplan felaketlerini listeler.
+ • `/wolves`*:* Tüm Wolf felaketlerini listeler.
+ *Note:* Bu komutlar, özel bot ayrıcalıklarına sahip kullanıcıları listeler ve yalnızca onlar tarafından kullanılabilir.
+ Ziyaret edebilirsin {SUPPORT_CHAT} bunlar hakkında daha fazla sorgulamak için.
 """
 
 SUDO_HANDLER = CommandHandler(("addsudo", "adddragon"), addsudo, pass_args=True)
