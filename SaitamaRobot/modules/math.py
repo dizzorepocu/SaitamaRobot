@@ -83,26 +83,26 @@ def log(bot: Bot, update: Update, args):
     message.reply_text(math.log(int(args[0])))
 
 __help__ = """
-Solves complex math problems using https://newton.now.sh
- • `/math`*:* Simplify `/simplify 2^2+2(2)`
- • `/factor`*:* Factor `/factor x^2 + 2x`
+Karmaşık matematik problemlerini kullanarak çözer https://newton.now.sh
+ • `/math`*:* basitleştirin `/simplify 2^2+2(2)`
+ • `/factor`*:* faktör `/factor x^2 + 2x`
  • `/derive`*:* Derive `/derive x^2+2x`
- • `/integrate`*:* Integrate `/integrate x^2+2x`
- • `/zeroes`*:* Find 0's `/zeroes x^2+2x`
- • `/tangent`*:* Find Tangent `/tangent 2lx^3`
- • `/area`*:* Area Under Curve `/area 2:4lx^3`
- • `/cos`*:* Cosine `/cos pi`
- • `/sin`*:* Sine `/sin 0`
- • `/tan`*:* Tangent `/tan 0`
- • `/arccos`*:* Inverse Cosine `/arccos 1`
- • `/arcsin`*:* Inverse Sine `/arcsin 0`
- • `/arctan`*:* Inverse Tangent `/arctan 0`
- • `/abs`*:* Absolute Value `/abs -1`
- • `/log`*:* Logarithm `/log 2l8`
+ • `/integrate`*:* Birleştirmek `/integrate x^2+2x`
+ • `/zeroes`*:* Ara 0's `/zeroes x^2+2x`
+ • `/tangent`*:* Teğet Bul`/tangent 2lx^3`
+ • `/area`*:* Eğri Altındaki Alan `/area 2:4lx^3`
+ • `/cos`*:* Kosinüs `/cos pi`
+ • `/sin`*:* Sinüs `/sin 0`
+ • `/tan`*:* Teğet `/tan 0`
+ • `/arccos`*:* Ters Kosinüs `/arccos 1`
+ • `/arcsin`*:* Ters Sinüs `/arcsin 0`
+ • `/arctan`*:* Ters Teğet `/arctan 0`
+ • `/abs`*:* Mutlak değer `/abs -1`
+ • `/log`*:* logaritma `/log 2l8`
 
-_Keep in mind_: To find the tangent line of a function at a certain x value, send the request as c|f(x) where c is the given x value and f(x) is the function expression, the separator is a vertical bar '|'. See the table above for an example request.
-To find the area under a function, send the request as c:d|f(x) where c is the starting x value, d is the ending x value, and f(x) is the function under which you want the curve between the two x values.
-To compute fractions, enter expressions as numerator(over)denominator. For example, to process 2/4 you must send in your expression as 2(over)4. The result expression will be in standard math notation (1/2, 3/4).
+_Unutmayın_: Bir işlevin belirli bir x değerinde teğet satırını bulmak için, isteği c | f (x) olarak gönderin; burada c verilen x değeri ve f (x) işlev ifadesidir, ayırıcı dikeydir çubuğu '|'. Örnek bir istek için yukarıdaki tabloya bakın.
+Bir işlevin altındaki alanı bulmak için, isteği c: d | f (x) olarak gönderin; burada c, başlangıç ​​x değeri, d bitiş x değeridir ve f (x), altında eğrinin olmasını istediğiniz işlevdir iki x değeri.
+Kesirleri hesaplamak için ifadeleri pay (üst) payda olarak girin. Örneğin, 2/4 işlemek için ifadenizi 2 (üzerinden) 4 olarak göndermeniz gerekir. Sonuç ifadesi standart matematik gösteriminde olacaktır (1/2, 3/4).
 """
 
 __mod_name__ = "Math"
