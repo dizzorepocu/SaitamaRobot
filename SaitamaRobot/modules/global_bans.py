@@ -116,7 +116,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
         return
 
-    message.reply_text("On it!")
+    message.reply_text("Üstünde!")
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
@@ -407,10 +407,10 @@ __help__ = f"""
 *Admins only:*
  • `/gbanstat <on/off/yes/no>`*:* Global yasakların grubunuz üzerindeki etkisini devre dışı bırakır veya mevcut ayarlarınızı döndürür.
 
-Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
-you and your groups by removing spam flooders as quickly as possible. They can be disabled for your group by calling \
+Küresel yasaklar olarak da bilinen Gbans, bot sahipleri tarafından spam göndericileri tüm gruplarda yasaklamak için kullanılır. Bu korumaya yardımcı olur \
+spam gruplarını olabildiğince çabuk kaldırarak siz ve gruplarınız. Arayarak grubunuz için devre dışı bırakılabilirler \
 `/gbanstat`
-*Note:* Users can appeal gbans or report spammers at {SUPPORT_CHAT}
+*Note:* Kullanıcılar gbans'a itiraz edebilir veya {SUPPORT_CHAT}
 """
 
 GBAN_HANDLER = CommandHandler("gban", gban, pass_args=True)
