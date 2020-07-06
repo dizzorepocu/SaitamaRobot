@@ -1,32 +1,32 @@
 RUN_STRINGS = (
-    "Huh? what? did they get away?",
-    "Now you see me, now you don't."
-    "ε=ε=ε=ε=┌(;￣▽￣)┘",
-    "Get back here!",
-    "REEEEEEEEEEEEEEEEEE!!!!!!!",
-    "Look out for the wall!",
-    "Don't leave me alone with them!!",
-    "You've got company!",
-    "Chotto matte!", # How about two Japanese?
-    "Yare yare daze",
-    "*Naruto run activated*",
-    "*Nezuko run activated*",
-    "Hey take responsibilty for what you just did!",
-    "May the odds be ever in your favour.",
-    "Run everyone, they just dropped a bomb 💣💣",
-    "And they disappeared forever, never to be seen again.",
-    "Legend has it, they're still running.",
-    "Hasta la vista, baby.",
-    "Ah, what a waste. I liked that one.",
-    "As The Doctor would say... RUN!",
+    Ha? Ne? Kaçtılar mı?" ,
+    "Şimdi beni görüyorsun, şimdi görmüyorsun."
+    "ε = ε = ε = ε = ┌ (; ￣ ▽ ￣) ┘" ,
+    "Buraya geri gel!" ,
+    "REEEEEEEEEEEEEEEEEE !!!!!!!" ,
+    "Duvara dikkat et!" ,
+    "Beni onlarla yalnız bırakma !!" ,
+    "Şirketiniz var!" ,
+    "Chotto mat!" , # Ya iki Japon?
+    "Yare yare şaşkınlık" ,
+    "* Naruto run etkinleştirildi *" ,
+    "* Nezuko çalıştırması etkinleştirildi *" ,
+    "Hey, az önce yaptığın şey için sorumluluk al!" ,
+    "Oranlar senin lehine olsun." ,
+    "Herkesi yönet , bomba bıraktılar 💣💣" ,
+    "Ve sonsuza kadar kayboldular, bir daha asla görülmeyecekler." ,
+    "Efsaneye göre, hala koşuyorlar." ,
+    "Görüşürüz bebeğim." ,
+    "Ah, ne büyük bir israf. Bunu sevdim." ,
+    "Doktor'un dediği gibi ... RUN!" ,
 )
 
-SLAP_SAITAMA_TEMPLATES = (
-    "Slap me one more time and I'll mute you.",
-    "Stop slapping me. REEEEEEEEEEEEEE.",
+SLAP_SAITAMA_TEMPLATES  = (
+    "Beni bir kez daha tokatla ve ben seni sustururum." ,
+    "Beni tokatlamayı kes. REEEEEEEEEEEEEE." ,
     [
-        "I am muting you for a minute.",  # normal reply
-        "Stop slapping me just because I can't mute you. REEEEEEEEEE.",  # reply to admin
+        "Seni bir dakikalığına susturuyorum." ,   # normal cevap
+        "Seni susturmadığım için beni tokatlamayı kes. REEEEEEEEEE.",  # reply to admin
         "tmute"  # command
     ]
 )
