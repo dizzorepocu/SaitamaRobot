@@ -16,27 +16,27 @@ from SaitamaRobot.modules.helper_funcs.extraction import extract_user
 
 
 MARKDOWN_HELP = f"""
-Markdown is a very powerful formatting tool supported by telegram. {dispatcher.bot.first_name} has some enhancements, to make sure that \
-saved messages are correctly parsed, and to allow you to create buttons.
+Markdown, telgraf tarafından desteklenen çok güçlü bir biçimlendirme aracıdır. {dispatcher.bot.first_name} emin olmak için bazı geliştirmeler var \
+kaydedilen mesajlar doğru şekilde ayrıştırılır ve düğmeler oluşturmanıza olanak tanır.
 
-• <code>_italic_</code>*:* wrapping text with '_' will produce italic text
-• <code>*bold*</code>*:* wrapping text with '*' will produce bold text
-• <code>`code`</code>*:* wrapping text with '`' will produce monospaced text, also known as 'code'
-• <code>[sometext](someURL)</code>*:* this will create a link - the message will just show <code>sometext</code>, \
-and tapping on it will open the page at <code>someURL</code>.
-<b>Example:</b>Example:<b>Example:</b> <code>[test](example.com)</code>
+• <code>_italic_</code>*:* metni kaydırma '_' italik metin üretecek
+• <code>*bold*</code>*:* metni kaydırma '*' kalın metin üretecek
+• <code>`code`</code>*:* metni kaydırma '`' olarak da bilinen tek aralıklı metin üretecek 'code'
+• <code>[sometext](someURL)</code>*:* bu bir bağlantı oluşturur - mesaj sadece gösterilir <code>sometext</code>, \
+üzerine dokunduğunuzda sayfanın <code>someURL</code>.
+<b>Örnek:</b>Örnek:<b>Örnek:</b> <code>[test](example.com)</code>
 
-• <code>[buttontext](buttonurl:someURL)</code>*:* this is a special enhancement to allow users to have telegram \
-buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
-will be the url which is opened.
-<b>Example:</b> <code>[This is a button](buttonurl:example.com)</code>
+• <code>[buttontext](buttonurl:someURL)</code>*:* bu, kullanıcıların telgraf yapmasına izin veren özel bir geliştirmedir \
+kendi markdown düğmeleri. <code>buttontext</code> düğmede görüntülenen şey olacak ve <code>someurl</code> \
+açılan url olacak.
+<b>Örnek:</b> <code>[This is a button](buttonurl:example.com)</code>
 
-If you want multiple buttons on the same line, use :same, as such:
+Aynı satırda birden fazla düğme istiyorsanız, şunu kullanın:h:
 <code>[one](buttonurl://example.com)
 [two](buttonurl://google.com:same)</code>
-This will create two buttons on a single line, instead of one button per line.
+Bu, satır başına bir düğme yerine tek bir satırda iki düğme oluşturur.
 
-Keep in mind that your message <b>MUST</b> contain some text other than just a button!
+Mesajınızın <b>MUST</b> sadece düğme dışında bir metin içeriyor!
 """
 
 
@@ -54,7 +54,7 @@ def get_id(bot: Bot, update: Update, args: List[str]):
             user1 = message.reply_to_message.from_user
             user2 = message.reply_to_message.forward_from
 
-            msg.reply_text(f"The original sender, {html.escape(user2.first_name)},"
+            msg.reply_text(f"Orijinal gönderen, {html.escape(user2.first_name)},"
                            f" has an ID of <code>{user2.id}</code>.\n"
                            f"The forwarder, {html.escape(user1.first_name)},"
                            f" has an ID of <code>{user1.id}</code>.",
@@ -69,11 +69,11 @@ def get_id(bot: Bot, update: Update, args: List[str]):
     else:
 
         if chat.type == "private":
-            msg.reply_text(f"Your id is <code>{chat.id}</code>.",
+            msg.reply_text(f"Kimliğin <code>{chat.id}</code>.",
                            parse_mode=ParseMode.HTML)
 
         else:
-            msg.reply_text(f"This group's id is <code>{chat.id}</code>.",
+            msg.reply_text(f"Bu grup's id is <code>{chat.id}</code>.",
                            parse_mode=ParseMode.HTML)
 
 
@@ -84,7 +84,7 @@ def gifid(bot: Bot, update: Update):
         update.effective_message.reply_text(f"Gif ID:\n<code>{msg.reply_to_message.animation.file_id}</code>",
                                             parse_mode=ParseMode.HTML)
     else:
-        update.effective_message.reply_text("Please reply to a gif to get its ID.")
+        update.effective_message.reply_text("Kimliğini almak için lütfen bir gif'e yanıt verin.")
 
 
 @run_async
@@ -102,7 +102,7 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not message.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not message.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        message.reply_text("I can't extract a user from this.")
+        message.reply_text("Bundan bir kullanıcı çıkaramıyorum.")
         return
 
     else:
@@ -123,22 +123,22 @@ def info(bot: Bot, update: Update, args: List[str]):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\nThe Disaster level of this person is 'God'."
+        text += "\nBu kişinin afet seviyesi 'Tanrı'."
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\nThis member is one of 'Hero Association'."
+        text += "\nBu üye 'Kahraman Derneği''."
         disaster_level_present = True
     elif user.id in SUDO_USERS:
-        text += "\nThe Disaster level of this person is 'Dragon'."
+        text += "\nBu kişinin afet seviyesi 'Ejderha'."
         disaster_level_present = True
     elif user.id in SUPPORT_USERS:
-        text += "\nThe Disaster level of this person is 'Demon'."
+        text += "\nBu kişinin afet seviyesi 'Şeytan''."
         disaster_level_present = True
     elif user.id in TIGER_USERS:
-        text += "\nThe Disaster level of this person is 'Tiger'."
+        text += "\nBu kişinin afet seviyesi 'Kaplan'."
         disaster_level_present = True
     elif user.id in WHITELIST_USERS:
-        text += "\nThe Disaster level of this person is 'Wolf'."
+        text += "\nBu kişinin afet seviyesi 'Kurt'."
         disaster_level_present = True
 
     if disaster_level_present:
@@ -151,7 +151,7 @@ def info(bot: Bot, update: Update, args: List[str]):
             result = result.json()["result"]
             if "custom_title" in result.keys():
                 custom_title = result['custom_title']
-                text += f"\n\nThis user holds the title <b>{custom_title}</b> here."
+                text += f"\n\nBu kullanıcı unvanı elinde tutuyor <b>{custom_title}</b> here."
     except BadRequest:
         pass
 
@@ -183,8 +183,8 @@ def echo(bot: Bot, update: Update):
 @run_async
 def markdown_help(bot: Bot, update: Update):
     update.effective_message.reply_text(MARKDOWN_HELP, parse_mode=ParseMode.HTML)
-    update.effective_message.reply_text("Try forwarding the following message to me, and you'll see!")
-    update.effective_message.reply_text("/save test This is a markdown test. _italics_, *bold*, `code`, "
+    update.effective_message.reply_text("Aşağıdaki mesajı bana iletmeyi deneyin, göreceksiniz!")
+    update.effective_message.reply_text("/save test Bu bir markdown testidir. _italics_, *bold*, `code`, "
                                         "[URL](example.com) [button](buttonurl:github.com) "
                                         "[button2](buttonurl://google.com:same)")
 
@@ -198,10 +198,10 @@ def stats(bot: Bot, update: Update):
 
 
 __help__ = """
- • `/id`*:* get the current group id. If used by replying to a message, gets that user's id.
- • `/gifid`*:* reply to a gif to me to tell you its file ID.
- • `/info`*:* get information about a user.
- • `/markdownhelp`*:* quick summary of how markdown works in telegram - can only be called in private chats.
+ • `/id`*:* geçerli grup kimliğini al. Bir iletiyi yanıtlayarak kullanılırsa, kullanıcının kimliğini alır.
+ • `/gifid`*:* size dosya kimliğini söylemek için bir gif cevap.
+ • `/info`*:* bir kullanıcı hakkında bilgi al.
+ • `/markdownhelp`*:* işaretlemenin telgrafta nasıl çalıştığının hızlı bir özeti - yalnızca özel sohbetlerde çağrılabilir.
 """
 
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
