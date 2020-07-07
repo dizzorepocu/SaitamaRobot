@@ -326,8 +326,7 @@ def del_blackliststicker(bot: Bot, update: Update):
 					message.delete()
 					mutetime = extract_time(message, value)
 					bot.restrict_chat_member(chat.id, user.id, until_date=mutetime, can_send_messages=False)
-					bot.sendMessage(chat.id, " bu kişi {} için susturuldu çünkü kara liste etiketlerindeki '{}'.format(mention_markdown(user.id, user.first_name), value, trigger), parse_mode="markdown")
-					return
+					bot.sendMessage(chat.id, "{} sesi kapatıldı {} çünkü kullanmak '{}' hangi kara liste çıkartmaları".format(mention_markdown(user.id, user.first_name), value, trigger), parse_mode="markdown")
 			except BadRequest as excp:
 				if excp.message == "Silinecek mesaj bulunamadı":
 					pass
