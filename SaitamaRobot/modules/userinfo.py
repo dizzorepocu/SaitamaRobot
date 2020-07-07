@@ -28,9 +28,9 @@ def about_me(bot: Bot, update: Update, args: List[str]):
                                             parse_mode=ParseMode.MARKDOWN)
     elif message.reply_to_message:
         username = message.reply_to_message.from_user.first_name
-        update.effective_message.reply_text(f"{username} hasn't set an info message about themselves yet!")
+        update.effective_message.reply_text(f"{username} henüz kendileri hakkında bilgi mesajı koymadı!")
     else:
-        update.effective_message.reply_text("You haven't set an info message about yourself yet!")
+        update.effective_message.reply_text("Henüz kendiniz hakkında bir bilgi mesajı belirlemediniz!")
 
 
 @run_async
@@ -50,12 +50,12 @@ def set_about_me(bot: Bot, update: Update):
         if len(info[1]) < MAX_MESSAGE_LENGTH // 4:
             sql.set_user_me_info(user_id, info[1])
             if user_id == bot.id:
-                message.reply_text("Updated my info!")
+                message.reply_text("Bilgilerimi güncelledi!")
             else:
-                message.reply_text("Updated your info!")
+                message.reply_text("Bilgileriniz güncellendi!")
         else:
             message.reply_text(
-                "The info needs to be under {} characters! You have {}.".format(MAX_MESSAGE_LENGTH // 4, len(info[1])))
+                "Bilginin {} karakterden az olması gerekiyor! Var {}.".format(MAX_MESSAGE_LENGTH // 4, len(info[1])))
 
 
 @run_async
@@ -75,9 +75,9 @@ def about_bio(bot: Bot, update: Update, args: List[str]):
                                             parse_mode=ParseMode.MARKDOWN)
     elif message.reply_to_message:
         username = user.first_name
-        update.effective_message.reply_text(f"{username} hasn't had a message set about themselves yet!")
+        update.effective_message.reply_text(f"{username} henüz kendileri hakkında bir mesaj ayarlamamış!")
     else:
-        update.effective_message.reply_text("You haven't had a bio set about yourself yet!")
+        update.effective_message.reply_text("Henüz kendinizle ilgili bir biyografiniz olmadı!")
 
 
 @run_async
@@ -90,11 +90,11 @@ def set_about_bio(bot: Bot, update: Update):
         user_id = repl_message.from_user.id
 
         if user_id == message.from_user.id:
-            message.reply_text("Ha, you can't set your own bio! You're at the mercy of others here...")
+            message.reply_text("Ha, kendi biyografini kuramazsın! Burada başkalarının merhametindesin...")
             return
 
         if user_id == bot.id and sender_id not in SUDO_USERS and sender_id not in DEV_USERS:
-            message.reply_text("Erm... yeah, I only trust sudo users or developers to set my bio.")
+            message.reply_text("Eee ... evet, sadece sudo kullanıcılarına veya geliştiricilerine biyografimi ayarlamak için güveniyorum.")
             return
 
         text = message.text
@@ -106,30 +106,30 @@ def set_about_bio(bot: Bot, update: Update):
                 message.reply_text("Updated {}'s bio!".format(repl_message.from_user.first_name))
             else:
                 message.reply_text(
-                    "A bio needs to be under {} characters! You tried to set {}.".format(
+                    "Bir biyografinin {} karakterlerin altında olması gerekir! Ayarlamaya çalıştın {}.".format(
                         MAX_MESSAGE_LENGTH // 4, len(bio[1])))
     else:
-        message.reply_text("Reply to someone's message to set their bio!")
+        message.reply_text("Biyografisini ayarlamak için birinin mesajını yanıtlayın!")
 
 
 def __user_info__(user_id):
     bio = html.escape(sql.get_user_bio(user_id) or "")
     me = html.escape(sql.get_user_me_info(user_id) or "")
     if bio and me:
-        return f"<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}"
+        return f"<b>Kullanıcı hakkında:</b>\n{me}\n<b>What others say:</b>\n{bio}"
     elif bio:
-        return f"<b>What others say:</b>\n{bio}\n"
+        return f"<b>Başkaları ne diyor:</b>\n{bio}\n"
     elif me:
-        return f"<b>About user:</b>\n{me}"
+        return f"<b>Kullanıcı hakkında:</b>\n{me}"
     else:
         return ""
 
 
 __help__ = """
- • `/setbio <text>`*:* while replying, will save another user's bio
- • `/bio`*:* will get your or another user's bio. This cannot be set by yourself.
- • `/setme <text>`*:* will set your info
- • `/me`*:* will get your or another user's info
+ • `/setbio <text>`*:* cevap verirken, başka bir kullanıcının biyografisini kurtaracak
+ • `/bio`*:* sizin veya başka bir kullanıcının biyografisini alır. Bu kendiniz ayarlanamaz.
+ • `/setme <text>`*:* bilgilerinizi ayarlayacak
+ • `/me`*:* sizin veya başka bir kullanıcının bilgilerini alacak
 """
 
 SET_BIO_HANDLER = DisableAbleCommandHandler("setbio", set_about_bio)
