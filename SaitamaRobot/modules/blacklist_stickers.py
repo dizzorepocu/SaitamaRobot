@@ -355,8 +355,8 @@ def __stats__():
 	return "{} {} sohbetler genelinde kara liste etiketleri.".format(sql.num_stickers_filters(), sql.num_stickers_filter_chats())
 
 __help__ = """
-Kara liste etiketi, belirli etiketleri durdurmak için kullanılır.Bir etiket gönderildiğinde, mesaj hemen silinir.
-*NOT:* Kara liste etiketleri grup yöneticisini etkilemez.
+kara liste etiketi, belirli etiketleri durdurmak için kullanılır. bir etiket gönderildiğinde, mesaj hemen silinir.
+*NOT:* kara liste etiketleri grup yöneticisini etkilemez.
  • `/blsticker`*:* Geçerli kara listeye alınmış etikete bakın.
 *Sadece Adminler:*
  • `/addblsticker <sticker link>`*:* etiket tetikleyicisini kara listeye ekleyin. cevap etiketi ile eklenebilir.
