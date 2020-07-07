@@ -1731,26 +1731,26 @@ def get_chat(chat_id, chat_data):
 @run_async
 def fed_owner_help(bot: Bot, update: Update):
    update.effective_message.reply_text("""*👑 Yalnızca Fed Sahibi:*
- • `/newfed <fed_name>`*:* Kullanıcı başına izin verilen bir Federasyon oluşturur. Fed adını değiştirmek için de kullanılabilir. (max. 64 karakter)
+ • `/newfed <fed_ismi>`*:* Kullanıcı başına izin verilen bir Federasyon oluşturur. Fed adını değiştirmek için de kullanılabilir. (max. 64 karakter)
  • `/delfed <fed_id>`*:* Bir Federasyonu ve bununla ilgili bilgileri silin. Engellenen kullanıcıları iptal etmeyecek.
- • `/fpromote <user>`*:* Kullanıcıyı bir federasyon yöneticisi olarak atar. `Fed Yöneticileri 'altında kullanıcı için tüm komutları etkinleştirir.
- • `/fdemote  <user>`*:* Kullanıcıyı Yönetici Federasyonundan normal bir kullanıcıya bırakır.
+ • `/fpromote <kullanıcı>`*:* Kullanıcıyı bir federasyon yöneticisi olarak atar. `Fed Yöneticileri 'altında kullanıcı için tüm komutları etkinleştirir.
+ • `/fdemote  <kullanıcı>`*:* Kullanıcıyı Yönetici Federasyonundan normal bir kullanıcıya bırakır.
  • `/subfed <fed_id>`*:* Belirli bir beslenen kimliğe abone olursanız, bu beslenen beslemenin yasakları da beslemenizde gerçekleşir.
  • `/unsubfed <fed_id>`*:* Belirli bir beslenen kimliğe olan aboneliği iptal eder.
  • `/setfedlog <fed_id>`*:* Grubu, federasyon için bir beslemeli günlük raporu tabanı olarak ayarlar.
  • `/unsetfedlog <fed_id>`*:* Grubu, federasyon için bir beslemeli günlük raporu tabanı olarak kaldırdı.
- • `/fbroadcast <message>`*:* Fedinize katılan tüm gruplara mesaj yayınlar.
+ • `/fbroadcast <mesaj>`*:* Fedinize katılan tüm gruplara mesaj yayınlar.
  • `/fedsubs`*:* Grubunuzun abone olduğu hakları gösterir. `(kırık rn)`""", parse_mode = ParseMode.MARKDOWN)
    
 @run_async
 def fed_admin_help(bot: Bot, update: Update):
    update.effective_message.reply_text("""*🔱 Fed Adminleri:*
- • `/fban <user> <reason>`*:* Fed bir kullanıcıyı yasaklar.
- • `/unfban <user> <reason>`*:* Bir kullanıcıyı beslenen yasağı kaldırır.
+ • `/fban <kullanıcı> <sebep>`*:* Fed bir kullanıcıyı yasaklar.
+ • `/unfban <kullanıcı> <sebep>`*:* Bir kullanıcıyı beslenen yasağı kaldırır.
  • `/fedinfo <fed_id>`*:* Belirtilen Federasyon hakkında bilgi.
  • `/joinfed <fed_id>`*:* Federasyon ile mevcut sohbete katılın. Bunu yalnızca sohbet sahipleri yapabilir. Her sohbet yalnızca bir Federasyonda olabilir.
  • `/leavefed <fed_id>`*:*Federasyonu ver. Bunu yalnızca sohbet sahipleri yapabilir.
- • `/setfrules <rules>`*:* Federasyon kurallarını düzenleyin.
+ • `/setfrules <kurallar>`*:* Federasyon kurallarını düzenleyin.
  • `/fednotif <on/off>`*:* fbaned /unfbaned kullanıcılar olduğunda Federasyon ayarları PM'de değil.
  • `/frules`*:* Federasyon düzenlemelerine bakınız.
  • `/fedadmins`*:* Federasyon yöneticisini göster.
