@@ -1,5 +1,5 @@
 RUN_STRINGS = (
-    Ha? Ne? Kaçtılar mı?" ,
+    "Ha? Ne? Kaçtılar mı?" ,
     "Şimdi beni görüyorsun, şimdi görmüyorsun."
     "ε = ε = ε = ε = ┌ (; ￣ ▽ ￣) ┘" ,
     "Buraya geri gel!" ,
