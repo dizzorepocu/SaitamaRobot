@@ -12,7 +12,7 @@ def shell(bot: Bot, update: Update):
    message = update.effective_message
    cmd = message.text.split(' ', 1)
    if len(cmd) == 1:
-     message.reply_text('No command to execute was given.')
+     message.reply_text('Yürütme komutu verilmedi.')
      return
    cmd = cmd[1]
    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
