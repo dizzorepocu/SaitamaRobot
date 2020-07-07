@@ -360,10 +360,10 @@ Kara liste etiketi, belirli etiketleri durdurmak için kullanılır. Bir etiket 
  • `/blsticker`*:* Geçerli kara listeye alınmış etikete bakın.
 *Only admin:*
  • `/addblsticker <sticker link>`*:*Etiket tetikleyicisini kara listeye ekleyin. Cevap etiketi ile eklenebilir.
- • `/unblsticker <sticker link>`*:* Tetikleyicileri kara listeden kaldırın. Aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
- • `/rmblsticker <sticker link>`*:* Yukarıdaki ile aynı.
+ • `/unblsticker <sticker link>`*:*Tetikleyicileri kara listeden kaldırın. Aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
+ • `/rmblsticker <sticker link>`*:*Yukarıdaki ile aynı.
  • `/blstickermode <ban/tban/mute/tmute>`*:* kullanıcılar kara listeye alınmış etiketler kullanıyorsa ne yapılacağı konusunda varsayılan bir işlem ayarlar. (`tmute şu anda bozuk görünüyor`)
-Not:
+*Not:
  • `<sticker link>` olabilir `https://t.me/addstickers/<sticker>` yada sadece `<sticker>`veya etiket mesajına cevap verin
 
 __mod_name__ = "Sticker Blacklist"
