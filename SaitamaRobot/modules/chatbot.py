@@ -103,12 +103,12 @@ def chatbot(bot: Bot, update: Update):
             sleep(0.3)
             msg.reply_text(rep, timeout=60)
         except CFError as e:
-            bot.send_message(OWNER_ID, f"Chatbot error: {e} occurred in {chat_id}!")
+            bot.send_message(OWNER_ID, f"Sohbet Botu Hatası: {e} oluştu {chat_id}!")
                     
 @run_async
 def list_chatbot_chats(bot: Bot, update: Update):
     chats = sql.get_all_chats()
-    text = "<b>AI-Enabled Chats</b>\n"
+    text = "<b>AI-Sohbette Aktif</b>\n"
     for chat in chats:
         try:
             x = bot.get_chat(int(*chat))
