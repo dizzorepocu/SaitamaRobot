@@ -78,7 +78,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
     log_message += (f"<b>{html.escape(chat.title)}:</b>\n"
                     "#PROMOTED\n"
                     f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                    f"<b>User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}")
+                    f"<b>Kullanıcı:</b> {mention_html(user_member.user.id, user_member.user.first_name)}")
 
     return log_message
 
@@ -134,7 +134,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
         log_message += (f"<b>{html.escape(chat.title)}:</b>\n"
                         f"#DEMOTED\n"
                         f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                        f"<b>User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}")
+                        f"<b>Kullanıcı:</b> {mention_html(user_member.user.id, user_member.user.first_name)}")
 
         return log_message
     except BadRequest:
@@ -186,7 +186,7 @@ def set_title(bot: Bot, update: Update, args: List[str]):
                            f"?chat_id={chat.id}"
                            f"&user_id={user_id}"
                            f"&custom_title={title}")
-    status = result.json()["ok"]
+    status = result.json()["tamam"]
 
     if status is True:
         bot.sendMessage(chat.id, f"İçin başlığı başarıyla ayarlandı <code>{user_member.user.first_name or user_id}</code> "
@@ -240,7 +240,7 @@ def unpin(bot: Bot, update: Update) -> str:
     try:
         bot.unpinChatMessage(chat.id)
     except BadRequest as excp:
-        if excp.message == "Chat_not_modified":
+        if excp.message == "Sohbet_Değiştirilmedi":
             pass
         else:
             raise
@@ -284,7 +284,7 @@ def adminlist(bot: Bot, update: Update):
     administrators = bot.getChatAdministrators(chat_id)
 
     if update_chat_title == message_chat_title:
-        chat_name = "this chat"
+        chat_name = "bu sohbet"
     else:
         chat_name = update_chat_title
 
@@ -299,7 +299,7 @@ def adminlist(bot: Bot, update: Update):
 
 
 def __chat_settings__(chat_id, user_id):
-    return "You are *admin*: `{}`".format(dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator"))
+    return "sen *admin*: `{}`".format(dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator"))
 
 
 __help__ = """
