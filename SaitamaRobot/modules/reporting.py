@@ -30,7 +30,7 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
                 sql.set_user_setting(chat.id, False)
                 msg.reply_text("Raporlama kapatıldı! Rapor almazsın.")
         else:
-            msg.reply_text(f"Your current report preference is: `{sql.user_should_report(chat.id)}`",
+            msg.reply_text(f"Mevcut rapor tercihiniz: `{sql.user_should_report(chat.id)}`",
                            parse_mode=ParseMode.MARKDOWN)
 
     else:
