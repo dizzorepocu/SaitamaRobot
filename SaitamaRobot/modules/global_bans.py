@@ -404,7 +404,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = f"""
-*Admins only:*
+*Adminlere sadece:*
  • `/gbanstat <on/off/yes/no>`*:* Global yasakların grubunuz üzerindeki etkisini devre dışı bırakır veya mevcut ayarlarınızı döndürür.
 
 Küresel yasaklar olarak da bilinen Gbans, bot sahipleri tarafından spam göndericileri tüm gruplarda yasaklamak için kullanılır. Bu korumaya yardımcı olur \
