@@ -31,7 +31,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("I doubt that's a user.")
+        message.reply_text("Bunun bir kullanıcı olduğundan şüpheliyim.")
         return log_message
 
     try:
@@ -57,7 +57,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
            f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
            f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}")
     if reason:
-        log += "\n<b>Swbep:</b> {}".format(reason)
+        log += "\n<b>Sebep:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id)
@@ -136,21 +136,21 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     log = (f"<b>{html.escape(chat.title)}:</b>\n"
            "#TEMP BANNED\n"
            f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-           f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}\n"
-           f"<b>Time:</b> {time_val}")
+           f"<b>Kullanıcı:</b> {mention_html(member.user.id, member.user.first_name)}\n"
+           f"<b>Zaman:</b> {time_val}")
     if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
+        log += "\n<b>Sebep:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id, until_date=bantime)
         # bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-        bot.sendMessage(chat.id, f"Banned! User {mention_html(member.user.id, member.user.first_name)} "
+        bot.sendMessage(chat.id, f"Banlandı! Kullanıcı {mention_html(member.user.id, member.user.first_name)} "
                                  f"will be banned for {time_val}.",
                         parse_mode=ParseMode.HTML)
         return log
 
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "Yanıt mesajı bulunamadı":
             # Do not reply
             message.reply_text(f"Yasaklı! Kullanıcının yasaklanması {time_val}.", quote=False)
             return log
@@ -158,7 +158,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
             LOGGER.warning(update)
             LOGGER.exception("ERROR yasaklayan kullanıcı %s sohbette %s (%s) Nedeniyle %s",
                              user_id, chat.title, chat.id, excp.message)
-            message.reply_text("Well damn, I can't ban that user.")
+            message.reply_text("Kahretsin, bu kullanıcıyı yasaklayamam.")
 
     return log_message
 
@@ -185,7 +185,7 @@ def punch(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
+        if excp.message == "Kullanıcı Bulunamadı":
             message.reply_text("Bu kullanıcıyı bulamıyorum.")
             return log_message
         else:
@@ -207,7 +207,7 @@ def punch(bot: Bot, update: Update, args: List[str]) -> str:
         log = (f"<b>{html.escape(chat.title)}:</b>\n"
                f"#KICKED\n"
                f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-               f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}")
+               f"<b>Kullanıcı:</b> {mention_html(member.user.id, member.user.first_name)}")
         if reason:
             log += f"\n<b>Sebep:</b> {reason}"
 
@@ -257,7 +257,7 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
+        if excp.message == "Kullanıcı Bulunamadı":
             message.reply_text("Bu kullanıcıyı bulamıyorum.")
             return log_message
         else:
@@ -277,7 +277,7 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
     log = (f"<b>{html.escape(chat.title)}:</b>\n"
            f"#UNBANNED\n"
            f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-           f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}")
+           f"<b>Kullanıcı:</b> {mention_html(member.user.id, member.user.first_name)}")
     if reason:
         log += f"\n<b>Sebep:</b> {reason}"
 
@@ -322,13 +322,13 @@ def selfunban(bot: Bot, update: Update, args: List[str]) -> str:
 
     log = (f"<b>{html.escape(chat.title)}:</b>\n"
            f"#UNBANNED\n"
-           f"<b>User:</b> {mention_html(member.user.id, member.user.first_name)}")
+           f"<b>Kullanıcı:</b> {mention_html(member.user.id, member.user.first_name)}")
 
     return log
 
 
 __help__ = """
- • `/punchme`*:* komutu veren kullanıcıyı yumruklar
+ • `/punchme`*:* komutu veren kullanıcı gruptan kendini atar
 
 *Admins only:*
  • `/ban <yanıtla>`*:* bir kullanıcıyı yasaklar. (tanıtıcı veya yanıtla)
