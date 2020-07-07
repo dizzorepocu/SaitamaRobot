@@ -355,15 +355,15 @@ def __stats__():
 	return "{} {} sohbetler genelinde kara liste etiketleri.".format(sql.num_stickers_filters(), sql.num_stickers_filter_chats())
 
 __help__ = """
-Kara liste etiketi, belirli etiketleri durdurmak için kullanılır. Bir etiket gönderildiğinde, mesaj hemen silinir.
+Kara liste etiketi, belirli etiketleri durdurmak için kullanılır.Bir etiket gönderildiğinde, mesaj hemen silinir.
 *NOT:* Kara liste etiketleri grup yöneticisini etkilemez.
  • `/blsticker`*:* Geçerli kara listeye alınmış etikete bakın.
-*Only admin:*
- • `/addblsticker <sticker link>`*:*Etiket tetikleyicisini kara listeye ekleyin. Cevap etiketi ile eklenebilir.
- • `/unblsticker <sticker link>`*:*Tetikleyicileri kara listeden kaldırın. Aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
- • `/rmblsticker <sticker link>`*:*Yukarıdaki ile aynı.
+*Sadece Adminler:*
+ • `/addblsticker <sticker link>`*:*Etiket tetikleyicisini kara listeye ekleyin.Cevap etiketi ile eklenebilir.
+ • `/unblsticker <sticker link>`*:* "Tetikleyicileri kara listeden kaldırın.Aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
+ • `/rmblsticker <sticker link>`*:* "Yukarıdaki ile aynı.
  • `/blstickermode <ban/tban/mute/tmute>`*:* kullanıcılar kara listeye alınmış etiketler kullanıyorsa ne yapılacağı konusunda varsayılan bir işlem ayarlar. (`tmute şu anda bozuk görünüyor`)
-*Not:
+*Not:*
  • `<sticker link>` olabilir `https://t.me/addstickers/<sticker>` yada sadece `<sticker>`veya etiket mesajına cevap verin
 
 __mod_name__ = "Sticker Blacklist"
