@@ -14,12 +14,12 @@ from SaitamaRobot.modules.helper_funcs.chat_status import sudo_plus, dev_plus
 def load(bot: Bot, update: Update):
     message = update.effective_message
     text = message.text.split(" ", 1)[1]
-    load_messasge = message.reply_text(f"Attempting to load module : <b>{text}</b>", parse_mode=ParseMode.HTML)
+    load_messasge = message.reply_text(f"Modül yüklenmeye çalışılıyor : <b>{text}</b>", parse_mode=ParseMode.HTML)
 
     try:
         imported_module = importlib.import_module("SaitamaRobot.modules." + text)
     except:
-        load_messasge.edit_text("Does that module even exist?")
+        load_messasge.edit_text("Bu modül var mı?")
         return
 
     if not hasattr(imported_module, "__mod_name__"):
@@ -28,7 +28,7 @@ def load(bot: Bot, update: Update):
     if not imported_module.__mod_name__.lower() in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
-        load_messasge.edit_text("Module already loaded.")
+        load_messasge.edit_text("Modül zaten yüklü.")
         return
     if "__handlers__" in dir(imported_module):
         handlers = imported_module.__handlers__
@@ -40,7 +40,7 @@ def load(bot: Bot, update: Update):
                 dispatcher.add_handler(handler_name, priority)
     else:
         IMPORTED.pop(imported_module.__mod_name__.lower())
-        load_messasge.edit_text("The module cannot be loaded.")
+        load_messasge.edit_text("Modül yüklenemiyor.")
         return
 
     if hasattr(imported_module, "__help__") and imported_module.__help__:
@@ -68,7 +68,7 @@ def load(bot: Bot, update: Update):
     if hasattr(imported_module, "__user_settings__"):
         USER_SETTINGS[imported_module.__mod_name__.lower()] = imported_module
 
-    load_messasge.edit_text("Successfully loaded module : <b>{}</b>".format(text), parse_mode=ParseMode.HTML)
+    load_messasge.edit_text("Başarıyla yüklenen modül : <b>{}</b>".format(text), parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -76,12 +76,12 @@ def load(bot: Bot, update: Update):
 def unload(bot: Bot, update: Update):
     message = update.effective_message
     text = message.text.split(" ", 1)[1]
-    unload_messasge = message.reply_text(f"Attempting to unload module : <b>{text}</b>", parse_mode=ParseMode.HTML)
+    unload_messasge = message.reply_text(f"Modülü boşaltmaya çalışıyor : <b>{text}</b>", parse_mode=ParseMode.HTML)
 
     try:
         imported_module = importlib.import_module("SaitamaRobot.modules." + text)
     except:
-        unload_messasge.edit_text("Does that module even exist?")
+        unload_messasge.edit_text("Bu modül var mı?")
         return
 
     if not hasattr(imported_module, "__mod_name__"):
@@ -89,13 +89,13 @@ def unload(bot: Bot, update: Update):
     if imported_module.__mod_name__.lower() in IMPORTED:
         IMPORTED.pop(imported_module.__mod_name__.lower())
     else:
-        unload_messasge.edit_text("Can't unload something that isn't loaded.")
+        unload_messasge.edit_text("Yüklü olmayan bir şey kaldırılamıyor.")
         return
     if "__handlers__" in dir(imported_module):
         handlers = imported_module.__handlers__
         for handler in handlers:
             if type(handler) == bool:
-                unload_messasge.edit_text("This module can't be unloaded!")
+                unload_messasge.edit_text("Bu modül boşaltılamaz!")
                 return
             elif type(handler) != tuple:
                 dispatcher.remove_handler(handler)
@@ -103,7 +103,7 @@ def unload(bot: Bot, update: Update):
                 handler_name, priority = handler
                 dispatcher.remove_handler(handler_name, priority)
     else:
-        unload_messasge.edit_text("The module cannot be unloaded.")
+        unload_messasge.edit_text("Modül boşaltılamıyor.")
         return
 
     if hasattr(imported_module, "__help__") and imported_module.__help__:
@@ -131,7 +131,7 @@ def unload(bot: Bot, update: Update):
     if hasattr(imported_module, "__user_settings__"):
         USER_SETTINGS.pop(imported_module.__mod_name__.lower())
 
-    unload_messasge.edit_text(f"Successfully unloaded module : <b>{text}</b>", parse_mode=ParseMode.HTML)
+    unload_messasge.edit_text(f"Başarılı bir şekilde boşaltılan modül : <b>{text}</b>", parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -146,7 +146,7 @@ def listmodules(bot: Bot, update: Update):
         file_name = file_info.__name__.rsplit("SaitamaRobot.modules.", 1)[1]
         mod_name = file_info.__mod_name__
         module_list.append(f'- <code>{mod_name} ({file_name})</code>\n')
-    module_list = "Following modules are loaded : \n\n" + ''.join(module_list)
+    module_list = "Aşağıdaki modüller yüklendi : \n\n" + ''.join(module_list)
     message.reply_text(module_list, parse_mode=ParseMode.HTML)
 
 
