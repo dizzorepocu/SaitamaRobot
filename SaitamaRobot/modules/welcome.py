@@ -672,25 +672,25 @@ WELC_HELP_TXT = ("Grubunuzun hoş geldiniz/veda mesajları birden çok şekilde 
                  " • `{mention}`*:* bu basitçe bir kullanıcıdan * bahseder - onları ilk isimleriyle etiketler.\n"
                  " • `{id}`*:* bu kullanıcının *id*\n"
                  " • `{count}`*:* bu kullanıcının *üye numarası*.\n"
-                 " • `{chatname}`*:* bu kullanıcının *current chat name*.\n"
-                 "\nEach variable MUST be surrounded by `{}` to be replaced.\n"
-                 "Welcome messages also support markdown, so you can make any elements bold/italic/code/links. "
-                 "Buttons are also supported, so you can make your welcomes look awesome with some nice intro "
+                 " • `{chatname}`*:* bu kullanıcının *mevcut sohbet adı*.\n"
+                 "\nHer değişkenin değiştirilmesi gereken `{}` ile çevrelenmesi GEREKİR.\n"
+                 "Hoş geldiniz iletileri, işaretlemeyi de destekler, böylece herhangi bir öğeyi yapabilirsiniz bold/italic/code/links. "
+                 "Düğmeler de desteklenir, böylece hoş bir girişle karşılamalarınızın harika görünmesini sağlayabilirsiniz. "
                  "buttons.\n"
-                 f"To create a button linking to your rules, use this: `[Rules](buttonurl://t.me/{dispatcher.bot.username}?start=group_id)`. "
-                 "Simply replace `group_id` with your group's id, which can be obtained via /id, and you're good to "
-                 "go. Note that group ids are usually preceded by a `-` sign; this is required, so please don't "
-                 "remove it.\n"
-                 "You can even set images/gifs/videos/voice messages as the welcome message by "
-                 "replying to the desired media, and calling `/setwelcome`.")
+                 f"Kurallarınıza bağlantı veren bir düğme oluşturmak için bunu kullanın: `[Rules](buttonurl://t.me/{dispatcher.bot.username}?start=group_id)`. "
+                 "Group_id" "grubunuzun /id ile elde edebileceğiniz kimliğiyle değiştirir yeterlidir. "
+                 "gitmek. Grup kimlikleri genellikle öncesinde “-` işareti; bu gerekli, bu yüzden lütfen yapma "
+                 "onu kaldır.\n"
+                 "Hatta görüntüleri / gifleri / videoları / sesli mesajları hoş geldiniz mesajı olarak ayarlayabilirsiniz. "
+                 "istenen medyayı yanıtlamak ve aramak `/setwelcome`.")
 
 WELC_MUTE_HELP_TXT = (
-    "You can get the bot to mute new people who join your group and hence prevent spambots from flooding your group. "
-    "The following options are possible:\n"
-    "• `/welcomemute soft`*:* restricts new members from sending media for 24 hours.\n"
-    "• `/welcomemute strong`*:* mutes new members till they tap on a button thereby verifying they're human.\n"
-    "• `/welcomemute off`*:* turns off welcomemute.\n"
-    "*Note:* Strong mode kicks a user from the chat if they dont verify in 120seconds. They can always rejoin though"
+    "Botun grubunuza katılan yeni kişileri sesini kapatabilir ve böylece spambotların grubunuza su basmasını önleyebilirsiniz.. "
+    "Aşağıdaki seçenekler mümkündür:\n"
+    "• `/welcomemute yumuşak`*:* yeni üyelerin 24 saat medya göndermesini kısıtlıyor.\n"
+    "• `/welcomemute kuvvetli`*:* yeni üyeleri bir düğmeye dokunana kadar susturur ve böylece insan olduklarını doğrular.\n"
+    "• `/welcomemute kapalı`*:* turns off welcomemute.\n"
+    "*Not:* Güçlü mod, 120 saniye içinde doğrulama yapmazsa bir kullanıcıyı sohbetten başlatır. Yine de her zaman yeniden katılabilirler"
                      )
 
 @run_async
@@ -724,27 +724,27 @@ def __migrate__(old_chat_id, new_chat_id):
 def __chat_settings__(chat_id, user_id):
     welcome_pref, _, _ = sql.get_welc_pref(chat_id)
     goodbye_pref, _, _ = sql.get_gdbye_pref(chat_id)
-    return "This chat has it's welcome preference set to `{}`.\n" \
-           "It's goodbye preference is `{}`.".format(welcome_pref, goodbye_pref)
+    return "Bu sohbetin hoş geldiniz tercihi olarak ayarlanmış `{}`.\n" \
+           "Hoşçakalın tercihi `{}`.".format(welcome_pref, goodbye_pref)
 
 
 __help__ = """
 {}
 
 *Admins only:*
- • `/welcome <on/off>`*:* enable/disable welcome messages.
- • `/welcome`*:* shows current welcome settings.
- • `/welcome noformat`*:* shows current welcome settings, without the formatting - useful to recycle your welcome messages!
- • `/goodbye`*:* same usage and args as `/welcome`.
- • `/setwelcome <sometext>`*:* set a custom welcome message. If used replying to media, uses that media.
- • `/setgoodbye <sometext>`*:* set a custom goodbye message. If used replying to media, uses that media.
- • `/resetwelcome`*:* reset to the default welcome message.
- • `/resetgoodbye`*:* reset to the default goodbye message.
- • `/cleanwelcome <on/off>`*:* On new member, try to delete the previous welcome message to avoid spamming the chat.
- • `/welcomemutehelp`*:* gives information about welcome mutes.
- • `/welcomehelp`*:* view more formatting information for custom welcome/goodbye messages.
- • `/cleanservice <on/off`*:* deletes telegrams welcome/left service messages. 
- *Example:* user joined chat, user left chat.
+ • `/welcome <on/off>`*:* hoş geldiniz iletilerini etkinleştirme / devre dışı bırakma.
+ • `/welcome`*:* geçerli karşılama ayarlarını gösterir.
+ • `/welcome noformat`*:* biçimlendirme olmadan geçerli karşılama ayarlarını gösterir - karşılama mesajlarınızı geri dönüştürmek için kullanışlıdır!
+ • `/goodbye`*:* ile aynı kullanım ve argümanlar `/welcome`.
+ • `/setwelcome <sometext>`*:* özel bir karşılama iletisi ayarlayın. Medyaya yanıt olarak kullanılırsa, bu medyayı kullanır.
+ • `/setgoodbye <sometext>`*:*özel bir hoşçakal mesajı ayarlayın. Medyaya yanıt olarak kullanılırsa, bu medyayı kullanır.
+ • `/resetwelcome`*:* varsayılan karşılama mesajına sıfırlayın.
+ • `/resetgoodbye`*:* varsayılan güle güle mesajına sıfırla.
+ • `/cleanwelcome <on/off>`*:* Yeni üyede sohbeti spam etmekten kaçınmak için önceki hoş geldiniz iletisini silmeyi deneyin
+ • `/welcomemutehelp`*:* karşılama sessizlikleri hakkında bilgi verir.
+ • `/welcomehelp`*:* özel karşılama / veda mesajları için daha fazla biçimlendirme bilgisi görüntüleme.
+ • `/cleanservice <on/off`*:* telgraf karşılama / sol servis mesajlarını siler. 
+ *Örnek:* kullanıcı sohbete katıldı, kullanıcı sohbeti bıraktı.
 """.format(WELC_HELP_TXT)
 
 NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members, new_member, pass_job_queue=True)
