@@ -23,7 +23,7 @@ def stickerid(bot: Bot, update: Update):
                                             escape_markdown(msg.reply_to_message.sticker.file_id) + "```",
                                             parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("Please reply to a sticker to get its ID.")
+        update.effective_message.reply_text("Kimliğini almak için lütfen bir çıkartmayı yanıtlayın.")
 
 
 @run_async
@@ -37,7 +37,7 @@ def getsticker(bot: Bot, update: Update):
         bot.send_document(chat_id, document=open('sticker.png', 'rb'))
         os.remove("sticker.png")
     else:
-        update.effective_message.reply_text("Please reply to a sticker for me to upload its PNG.")
+        update.effective_message.reply_text("Lütfen PNG'sini yüklemem için bir çıkartmaya yanıt verin.")
 
 
 @run_async
@@ -87,11 +87,11 @@ def kang(bot: Bot, update: Update, args: List[str]):
             with open('kangsticker.png', 'rb') as sticker:
                 bot.add_sticker_to_set(user_id=user.id, name=packname,
                                        png_sticker=sticker, emojis=sticker_emoji)
-            msg.reply_text(f"Sticker successfully added to [pack](t.me/addstickers/{packname})\n"
+            msg.reply_text(f"Etiket başarıyla eklendi [pack](t.me/addstickers/{packname})\n"
                            f"Emoji is:" + " " + sticker_emoji,
                            parse_mode=ParseMode.MARKDOWN)
         except OSError as e:
-            msg.reply_text("I can only kang images m8.")
+            msg.reply_text("Ben sadece kang görüntüleri m8.")
             print(e)
             return
         except TelegramError as e:
@@ -103,13 +103,13 @@ def kang(bot: Bot, update: Update, args: List[str]):
                 with open('kangsticker.png', 'rb') as sticker:
                     bot.add_sticker_to_set(user_id=user.id, name=packname,
                                            png_sticker=sticker, emojis=sticker_emoji)
-                msg.reply_text(f"Sticker successfully added to [pack](t.me/addstickers/{packname})\n"
+                msg.reply_text(f"Etiket başarıyla eklendi [pack](t.me/addstickers/{packname})\n"
                                f"Emoji is: {sticker_emoji}",
                                parse_mode=ParseMode.MARKDOWN)
-            elif e.message == "Invalid sticker emojis":
-                msg.reply_text("Invalid emoji(s).")
+            elif e.message == "Geçersiz etiket emojileri":
+                msg.reply_text("Geçersiz emoji(s).")
             elif e.message == "Stickers_too_much":
-                msg.reply_text("Max packsize reached. Press F to pay respecc.")
+                msg.reply_text("Maksimum paket boyutuna ulaşıldı. İlgili ödemeyi yapmak için F tuşuna basın.")
             print(e)
     elif args:
         try:
@@ -146,11 +146,11 @@ def kang(bot: Bot, update: Update, args: List[str]):
                 bot.add_sticker_to_set(user_id=user.id, name=packname,
                                        png_sticker=sticker, emojis=sticker_emoji)
             msg.reply_text(
-                f"Sticker successfully added to [pack](t.me/addstickers/{packname})\n"
+                f"Etiket başarıyla eklendi [pack](t.me/addstickers/{packname})\n"
                 f"Emoji is: {sticker_emoji}",
                 parse_mode=ParseMode.MARKDOWN)
         except OSError as e:
-            msg.reply_text("I can only kang images m8.")
+            msg.reply_text("Ben sadece kang görüntüleri m8.")
             print(e)
             return
         except TelegramError as e:
@@ -158,14 +158,14 @@ def kang(bot: Bot, update: Update, args: List[str]):
                 with open('kangsticker.png', 'rb') as sticker:
                     makepack_internal(msg, user, sticker, sticker_emoji, bot)
             elif e.message == "Sticker_png_dimensions":
-                msg.reply_text("Could not resize image to the correct dimensions.")
-            elif e.message == "Invalid sticker emojis":
-                msg.reply_text("Invalid emoji(s).")
+                msg.reply_text("Görüntü doğru boyutlara göre yeniden boyutlandırılamadı.")
+            elif e.message == "Geçersiz etiket emojileri":
+                msg.reply_text("Geçersiz emoji(s).")
             print(e)
     else:
         msg.reply_text(
-            f"Please reply to a sticker, or image to kang it!\n"
-            f"Oh, by the way. Your pack can be found [here](t.me/addstickers/{packname})",
+            f"Lütfen bir çıkartmaya veya kang için resme cevap verin!\n"
+            f"Oh, bu arada. Paketiniz bulunabilir [here](t.me/addstickers/{packname})",
             parse_mode=ParseMode.MARKDOWN)
     if os.path.isfile("kangsticker.png"):
         im.close()
@@ -183,25 +183,25 @@ def makepack_internal(msg, user, png_sticker, emoji, bot):
                                              emojis=emoji)
     except TelegramError as e:
         print(e)
-        if e.message == "Sticker set name is already occupied":
-            msg.reply_text(f"Your pack can be found [here](t.me/addstickers/{packname})",
+        if e.message == "Etiket kümesi adı zaten dolu":
+            msg.reply_text(f"Paketiniz bulunabilir [here](t.me/addstickers/{packname})",
                            parse_mode=ParseMode.MARKDOWN)
         elif e.message == "Peer_id_invalid":
-            msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+            msg.reply_text("Önce PM'de bana ulaşın.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
                 text="Start", url=f"t.me/{bot.username}")]]))
         return
 
     if success:
-        msg.reply_text(f"Sticker pack successfully created. Get it [here](t.me/addstickers/{packname})",
+        msg.reply_text(f"Çıkartma paketi başarıyla oluşturuldu. Anla [here](t.me/addstickers/{packname})",
                        parse_mode=ParseMode.MARKDOWN)
     else:
-        msg.reply_text("Failed to create sticker pack. Possibly due to blek mejik.")
+        msg.reply_text("Çıkartma paketi oluşturulamadı. Muhtemelen blek mejik nedeniyle.")
 
 
 __help__ = """
-• `/stickerid`*:* reply to a sticker to me to tell you its file ID.
-• `/getsticker`*:* reply to a sticker to me to upload its raw PNG file.
-• `/kang`*:* reply to a sticker to add it to your pack.
+• `/stickerid`*:* bana dosya kimliğini söylemek için bir çıkartmaya cevap ver.
+• `/getsticker`*:* ham PNG dosyasını yüklemek için bana bir çıkartmayı yanıtla.
+• `/kang`*:* paketinize eklemek için bir etikete cevap verin.
 """
 
 __mod_name__ = "Stickers"
