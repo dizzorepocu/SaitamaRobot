@@ -359,9 +359,9 @@ Kara liste etiketi, belirli etiketleri durdurmak için kullanılır.Bir etiket g
 *NOT:* Kara liste etiketleri grup yöneticisini etkilemez.
  • `/blsticker`*:* Geçerli kara listeye alınmış etikete bakın.
 *Sadece Adminler:*
- • `/addblsticker <sticker link>`*:*Etiket tetikleyicisini kara listeye ekleyin.Cevap etiketi ile eklenebilir.
- • `/unblsticker <sticker link>`*:* "Tetikleyicileri kara listeden kaldırın.Aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
- • `/rmblsticker <sticker link>`*:* "Yukarıdaki ile aynı.
+ • `/addblsticker <sticker link>`*:* etiket tetikleyicisini kara listeye ekleyin. cevap etiketi ile eklenebilir.
+ • `/unblsticker <sticker link>`*:* "tetikleyicileri kara listeden kaldırın. aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
+ • `/rmblsticker <sticker link>`*:* yukarıdaki ile aynı.
  • `/blstickermode <ban/tban/mute/tmute>`*:* kullanıcılar kara listeye alınmış etiketler kullanıyorsa ne yapılacağı konusunda varsayılan bir işlem ayarlar. (`tmute şu anda bozuk görünüyor`)
 *Not:*
  • `<sticker link>` olabilir `https://t.me/addstickers/<sticker>` yada sadece `<sticker>`veya etiket mesajına cevap verin
