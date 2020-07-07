@@ -25,11 +25,11 @@ def wall(bot: Bot, update: Update, args):
         term = query.replace(" ", "%20")
         json_rep = r.get(f"https://wall.alphacoders.com/api2.0/get.php?auth={WALL_API}&method=search&term={term}").json()
         if not json_rep.get("success"):
-            msg.reply_text(f"An error occurred! Report this {SUPPORT_CHAT}")
+            msg.reply_text(f"Bir hata oluştu! Bunu şikayet et {SUPPORT_CHAT}")
         else:
             wallpapers = json_rep.get("wallpapers")
             if not wallpapers:
-                msg.reply_text("No results found! Refine your search.")
+                msg.reply_text("Sonuç bulunamadı! Aramanı düzelt.")
                 return
             else:
                 index = randint(0, len(wallpapers)-1) # Choose random index
