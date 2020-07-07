@@ -154,7 +154,7 @@ SLAP_TEMPLATES = (
     "{user1}, {user2} 'yi ateşli bir fırına tabi tuttu.",
     "Sakura Haruno artık {user2} 'den daha kullanışlı hale geldi",
     "{user1}, {user2} 'ın yaşam desteğini çıkarttı.",
-    "{user1}, 5 yıllık kötü İnternet'e {user2}" abone oldu. ",
+    "{user1}, 5 yıllık kötü İnternete {user2} abone oldu. ",
     "{user1} bir timsah diş hekimi olmanın neden kötü bir fikir olduğunu öğrendi.",
     "Babamın şakalarından daha kötü olanı biliyor musun? {User2}!",
     "{user1}, {user2} adlı kullanıcının tüm çerezlerini aldı.",
