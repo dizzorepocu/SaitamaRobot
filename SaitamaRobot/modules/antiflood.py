@@ -137,7 +137,7 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
 
                 return log_message
             elif amount < 3:
-                message.reply_text("Antiflood has to be either 0 (disabled), or a number bigger than 3!")
+                message.reply_text("Antiflood 0 da (kapalı), veya daha büyük bir sayı gir 3 gibi!")
                 return log_message
 
             else:
@@ -175,7 +175,7 @@ def flood(bot: Bot, update: Update):
                                             parse_mode=ParseMode.HTML)
     else:
         update.effective_message.reply_text(f"Flood Ayarı 0 ise kapalı olur 3 ten büyük olmalı "
-                                            f"more than {limit} consecutive messages{chat_name}.",
+                                            f"more than {limit} ardışık mesajlar{chat_name}.",
                                             parse_mode=ParseMode.HTML)
 
 
