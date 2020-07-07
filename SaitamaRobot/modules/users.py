@@ -39,10 +39,10 @@ def get_user_id(username):
                     return userdat.id
 
             except BadRequest as excp:
-                if excp.message == 'Chat not found':
+                if excp.message == 'Sohbet bulunamadı':
                     pass
                 else:
-                    LOGGER.exception("Error extracting user ID")
+                    LOGGER.exception("Kullanıcı kimliği çıkarılırken hata oluştu")
 
     return None
 
@@ -64,17 +64,17 @@ def broadcast(bot: Bot, update: Update):
                 sleep(0.1)
             except TelegramError:
                 failed += 1
-                LOGGER.warning("Couldn't send broadcast to %s, group name %s", str(chat.chat_id), str(chat.chat_name))
+                LOGGER.warning("%S, grup adına yayın gönderilemedi %s", str(chat.chat_id), str(chat.chat_name))
         for user in users:
             try:
                 bot.sendMessage(int(user.user_id), to_send[1])
                 sleep(0.1)
             except TelegramError:
                 failed_user += 1
-                LOGGER.warning("Couldn't send broadcast to %s", str(user.user_id))
+                LOGGER.warning("Adresine yayın gönderilemedi %s", str(user.user_id))
 
         update.effective_message.reply_text(
-            f"Broadcast complete. {failed} groups failed to receive the message, probably due to being kicked. {failed_user} failed to receive message, probably due to being blocked"
+            f"Yayın tamamlandı. {failed} gruplar büyük olasılıkla tekmelendikleri için mesajı alamadılar. {failed_user} büyük olasılıkla engellendiği için ileti alınamadı"
             )
 
 
@@ -103,7 +103,7 @@ def log_user(bot: Bot, update: Update):
 @sudo_plus
 def chats(bot: Bot, update: Update):
     all_chats = sql.get_all_chats() or []
-    chatfile = 'List of chats.\n0. Chat name | Chat ID | Members count\n'
+    chatfile = 'Sohbetlerin listesi.\n0. Sohbet Adı | Sohbet ID | Üye sayısı\n'
     P = 1
     for chat in all_chats:
         try:
@@ -121,7 +121,7 @@ def chats(bot: Bot, update: Update):
         update.effective_message.reply_document(
             document=output,
             filename="chatlist.txt",
-            caption="Here is the list of chats in my database.")
+            caption="İşte veritabanımdaki sohbetlerin listesi.")
 
 @run_async
 def chat_checker(bot: Bot, update: Update):
@@ -130,9 +130,9 @@ def chat_checker(bot: Bot, update: Update):
 
 def __user_info__(user_id):
     if user_id == dispatcher.bot.id:
-        return """I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me."""
+        return """Onları gördüm ... Vay canına. Beni takip mi ediyorlar? Onlar aynı yerdeler ... oh. Benim."""
     num_chats = sql.get_user_num_chats(user_id)
-    return f"""I've seen them in <code>{num_chats}</code> chats in total."""
+    return f"""Onları içinde gördüm <code>{num_chats}</code> toplam sohbet."""
 
 def __stats__():
     return f"{sql.num_users()} users, across {sql.num_chats()} chats"
