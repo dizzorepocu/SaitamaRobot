@@ -27,7 +27,7 @@ def afk(bot: Bot, update: Update):
 
     sql.set_afk(update.effective_user.id, reason)
     fname = update.effective_user.first_name
-    update.effective_message.reply_text("{} is now away!".format(fname))
+    update.effective_message.reply_text("{} şimdi uzakta!".format(fname))
 
     
 @run_async
@@ -95,7 +95,7 @@ def reply_afk(bot: Bot, update: Update):
                 try:
                     chat = bot.get_chat(user_id)
                 except BadRequest:
-                    print("Error: Could not fetch userid {} for AFK module".
+                    print("Error: Kullanıcı kimliği getirilemedi {} afk modülü için".
                           format(user_id))
                     return
                 fst_name = chat.first_name
@@ -123,7 +123,7 @@ def check_afk(bot, update, user_id, fst_name, userc_id):
         else:
             if int(userc_id) == int(user_id):
                 return
-            res = "{} is afk.\nReason: {}".format(fst_name, user.reason)
+            res = "{} is afk.\nSebep: {}".format(fst_name, user.reason)
             update.effective_message.reply_text(res)
 
 
