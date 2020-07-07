@@ -26,8 +26,8 @@ def send_rules(update, chat_id, from_pm=False):
         chat = bot.get_chat(chat_id)
     except BadRequest as excp:
         if excp.message == "Chat not found" and from_pm:
-            bot.send_message(user.id, "The rules shortcut for this chat hasn't been set properly! Ask admins to "
-                                      "fix this.")
+            bot.send_message(user.id, "Bu sohbet için kurallar kısayolu doğru şekilde ayarlanmamış! Yöneticilerden şunu isteyin: "
+                                      "bunu tamir et.")
             return
         else:
             raise
@@ -38,16 +38,16 @@ def send_rules(update, chat_id, from_pm=False):
     if from_pm and rules:
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
     elif from_pm:
-        bot.send_message(user.id, "The group admins haven't set any rules for this chat yet. "
-                                  "This probably doesn't mean it's lawless though...!")
+        bot.send_message(user.id, "Grup yöneticileri bu sohbet için henüz bir kural belirlemedi. "
+                                  "Bu muhtemelen kanunsuz olduğu anlamına gelmez...!")
     elif rules:
-        update.effective_message.reply_text("Contact me in PM to get this group's rules.",
+        update.effective_message.reply_text("Bu grubun kurallarını almak için PM'de bana ulaşın.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="Rules",
                                                                        url=f"t.me/{bot.username}?start={chat_id}")]]))
     else:
-        update.effective_message.reply_text("The group admins haven't set any rules for this chat yet. "
-                                            "This probably doesn't mean it's lawless though...!")
+        update.effective_message.reply_text("Grup yöneticileri bu sohbet için henüz bir kural belirlemedi. "
+                                            "Bu muhtemelen kanunsuz olduğu anlamına gelmez...!")
 
 
 @run_async
@@ -63,7 +63,7 @@ def set_rules(bot: Bot, update: Update):
         markdown_rules = markdown_parser(txt, entities=msg.parse_entities(), offset=offset)
 
         sql.set_rules(chat_id, markdown_rules)
-        update.effective_message.reply_text("Successfully set rules for this group.")
+        update.effective_message.reply_text("Bu grup için kurallar başarıyla ayarlandı.")
 
 
 @run_async
@@ -71,11 +71,11 @@ def set_rules(bot: Bot, update: Update):
 def clear_rules(bot: Bot, update: Update):
     chat_id = update.effective_chat.id
     sql.set_rules(chat_id, "")
-    update.effective_message.reply_text("Successfully cleared rules!")
+    update.effective_message.reply_text("Kurallar başarıyla temizlendi!")
 
 
 def __stats__():
-    return f"{sql.num_chats()} chats have rules set."
+    return f"{sql.num_chats()} sohbetler için kurallar ayarlandı."
 
 
 def __import_data__(chat_id, data):
@@ -89,15 +89,15 @@ def __migrate__(old_chat_id, new_chat_id):
 
 
 def __chat_settings__(chat_id, user_id):
-    return f"This chat has had it's rules set: `{bool(sql.get_rules(chat_id))}`"
+    return f"Bu sohbette kurallar belirlenmiş: `{bool(sql.get_rules(chat_id))}`"
 
 
 __help__ = """
- • `/rules`*:* get the rules for this chat.
+ • `/rules`*:* bu sohbet için kuralları al.
 
 *Admins only:*
- • `/setrules <your rules here>`*:* set the rules for this chat.
- • `/clearrules`*:* clear the rules for this chat.
+ • `/setrules <your rules here>`*:* bu sohbet için kuralları belirle.
+ • `/clearrules`*:* bu sohbetin kurallarını temizle.
 """
 
 __mod_name__ = "Rules"
