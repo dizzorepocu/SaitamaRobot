@@ -61,8 +61,8 @@ def sed(bot: Bot, update: Update):
 
         repl, repl_with, flags = sed_result
         if not repl:
-            update.effective_message.reply_to_message.reply_text("You're trying to replace... "
-                                                                 "nothing with something?")
+            update.effective_message.reply_to_message.reply_text("Değiştirmeye çalışıyorsun... "
+                                                                 "bir şey ile hiçbir şey?")
             return
 
         try:
@@ -71,12 +71,12 @@ def sed(bot: Bot, update: Update):
             except TimeoutError:	
               return
             if check and check.group(0).lower() == to_fix.lower():
-                update.effective_message.reply_to_message.reply_text("Hey everyone, {} is trying to make "
-                                                                     "me say stuff I don't wanna "
-                                                                     "say!".format(update.effective_user.first_name))
+                update.effective_message.reply_to_message.reply_text("Selam millet, {} yapmaya çalışıyor "
+                                                                     "istemediğimi söylerim "
+                                                                     "söyle!".format(update.effective_user.first_name))
                 return
             if infinite_loop_check(repl):
-                update.effective_message.reply_text("I'm afraid I can't run that regex.")
+                update.effective_message.reply_text("Korkarım şu normal ifadeyi çalıştıramam.")
                 return
             if 'i' in flags and 'g' in flags:
                 text = regex.sub(repl, repl_with, to_fix, flags=regex.I, timeout=3).strip()
@@ -91,25 +91,25 @@ def sed(bot: Bot, update: Update):
             return
         except sre_constants.error:
             LOGGER.warning(update.effective_message.text)
-            LOGGER.exception("SRE constant error")
-            update.effective_message.reply_text("Do you even sed? Apparently not.")
+            LOGGER.exception("SRE sabit hatası")
+            update.effective_message.reply_text("Sed bile mi? Görünüşe göre öyle değil.")
             return
 
         # empty string errors -_-
         if len(text) >= telegram.MAX_MESSAGE_LENGTH:
-            update.effective_message.reply_text("The result of the sed command was too long for \
+            update.effective_message.reply_text("Sed komutunun sonucu çok uzun \
                                                  telegram!")
         elif text:
             update.effective_message.reply_to_message.reply_text(text)
 
 
 __help__ = """
- • `s/<text1>/<text2>(/<flag>)`*:* Reply to a message with this to perform a sed operation on that message, replacing all \
-occurrences of 'text1' with 'text2'. Flags are optional, and currently include 'i' for ignore case, 'g' for global, \
-or nothing. Delimiters include `/`, `_`, `|`, and `:`. Text grouping is supported. The resulting message cannot be \
+ • `s/<mesaj1>/<mesaj2>(/<bayrak>)`*:* Bu iletide bir sed işlemi gerçekleştirmek ve tümünü değiştirerek bir iletiyi yanıtlayın. \
+occurrences of 'text1' with 'text2'. Bayraklar isteğe bağlıdır ve şu anda yoksaymak için 'i', global için 'g', \
+veya hiçbirşey. Sınırlayıcılar şunları içerir `/`, `_`, `|`, ve `:`. Metin gruplaması desteklenir. Ortaya çıkan mesaj olamaz\
 larger than {}.
-*Reminder:* Sed uses some special characters to make matching easier, such as these: `+*.?\\`
-If you want to use these characters, make sure you escape them!
+*Reminder:* Sed eşleştirmeyi kolaylaştırmak için bazı özel karakterler kullanır.: `+*.?\\`
+Bu karakterleri kullanmak istiyorsanız, karakterlerden kaçtığınızdan emin olun!
 *Example:* \\?.
 """.format(telegram.MAX_MESSAGE_LENGTH)
 
