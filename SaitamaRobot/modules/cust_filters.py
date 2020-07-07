@@ -237,15 +237,15 @@ __help__ = """
  • `/filters`*:* bu sohbetteki tüm etkin filtreleri listele.
 
 *Admins only:*
- • `/filter <keyword> <reply message>`*:* bu sohbete bir filtre ekler. Bot artık 'anahtar kelime' olduğunda bu iletiyi yanıtlayacaktır\
+ • `/filter <klavye> <yanıtlanan mesaj>`*:* bu sohbete bir filtre ekler. Aphrodite artık 'anahtar kelime' olduğunda bu iletiyi yanıtlayacaktır\
 belirtilir. Bir anahtar kelimeye sahip bir çıkartmaya yanıt verirseniz, bot bu çıkartmayla yanıt verir. \
 Anahtar kelimenizin cümle olmasını istiyorsanız tırnak işareti kullanın. 
 *Örnek:* `/filter "hey orada "Nasılsın?`
- • `/stop <filter keyword>`*:* bu filtreyi durdur.
+ • `/stop <filtre klavyesi>`*:* bu filtreyi durdur.
 Note: Filtreler artık normal ifadeye sahip olduğundan, mevcut tüm filtreler varsayılan olarak büyük / küçük harfe duyarlı değildir.\
 Büyük / küçük harfe duyarlı olmayan normal ifadeyi kullanmak için\
 `/filter "(?i) tetikleyici kelimem "davayı yok sayan cevabım`\
-Daha gelişmiş regex yardımına ihtiyacınız varsa, lütfen bize ulaşın @ElsaSupport. 
+Daha gelişmiş regex yardımına ihtiyacınız varsa, lütfen bize ulaşın @AphroditeSupport. 
 """
 
 FILTER_HANDLER = CommandHandler("filter", filters)
