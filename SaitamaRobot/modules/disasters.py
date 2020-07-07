@@ -27,16 +27,16 @@ def check_user_id(user_id: int, bot: Bot) -> Optional[str]:
     return reply
 
 #I added extra new lines
-disasters = """ ELSA, "" Afet Seviyeleri olarak adlandırdığımız bot erişim seviyelerine sahiptir"*
+disasters = """ Aphrodite, "" Afet Seviyeleri olarak adlandırdığımız bot erişim seviyelerine sahiptir"*
 \n*Heroes Association * - Bot sunucusuna erişebilen ve bot kodunu çalıştırabilen, düzenleyebilen, değiştirebilen geliştiriciler. Diğer Afetleri de yönetebilir
 \n*Tanrı * - Sadece bir tane var, bot sahibi.
-Sahibinin ELSA'daki sohbetlerdeki bot yönetimi de dahil olmak üzere tam bot erişimi vardır.
-\n*Ejderhalar * - Süper kullanıcı erişimine sahip olabilir, gban yapabilir, felaketleri onlardan daha düşük yönetebilir ve ELSA'da yöneticiler olabilir.
-\n*Şeytanlar * - Erişimi ELSA genelinde küresel olarak yasaklamak gidin.
+Sahibinin Aphrodite'de ki sohbetlerdeki bot yönetimi de dahil olmak üzere tam bot erişimi vardır.
+\n*Ejderhalar * - Süper kullanıcı erişimine sahip olabilir, gban yapabilir, felaketleri onlardan daha düşük yönetebilir ve Aphrodite'de yöneticiler olabilir.
+\n*Şeytanlar * - Erişimi Aphrodite genelinde küresel olarak yasaklamak gidin.
 \n*Kaplanlar * - Kurtlarla aynıdır, ancak yasaklandığında kendilerini yasaklayabilirler.
 \n*Wolves* - Yasaklanamaz, sessiz sel tekmelenir, ancak yöneticiler tarafından manuel olarak yasaklanabilir.
-\n*Feragat *: ELSA'daki afet seviyeleri sorun giderme, destek ve potansiyel dolandırıcıların yasaklanması için hazırdır.
-Kötüye kullanımı bildirin veya bu konuda bize daha fazla bilgi sorun: [ELSA Support](https://t.me/ElsaSupport).
+\n*Feragat *: Aphrodite'deki afet seviyeleri sorun giderme, destek ve potansiyel dolandırıcıların yasaklanması için hazırdır.
+Kötüye kullanımı bildirin veya bu konuda bize daha fazla bilgi sorun: [Aphrodite Support](https://t.me/AphroditeSupport).
 """
 # do not async, not a handler 
 def send_disasters(update):
@@ -87,7 +87,7 @@ def addsudo(bot: Bot, update: Update, args: List[str]) -> str:
 
     log_message = (f"#SUDO\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                   f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                   f"<b>Kullanıcı:</b> {mention_html(user_member.id, user_member.first_name)}")
 
     if chat.type != 'private':
         log_message = f"<b>{html.escape(chat.title)}:</b>\n" + log_message
@@ -139,7 +139,7 @@ def addsupport(bot: Bot, update: Update, args: List[str]) -> str:
 
     log_message = (f"#SUPPORT\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                   f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                   f"<b>Kullanıcı:</b> {mention_html(user_member.id, user_member.first_name)}")
 
     if chat.type != 'private':
         log_message = f"<b>{html.escape(chat.title)}:</b>\n" + log_message
@@ -192,7 +192,7 @@ def addwhitelist(bot: Bot, update: Update, args: List[str]) -> str:
 
     log_message = (f"#WHITELIST\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)} \n"
-                   f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                   f"<b>Türkçe:</b> {mention_html(user_member.id, user_member.first_name)}")
 
     if chat.type != 'private':
         log_message = f"<b>{html.escape(chat.title)}:</b>\n" + log_message
@@ -246,11 +246,11 @@ def addtiger(bot: Bot, update: Update, args: List[str]) -> str:
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + f"\nSuccessfully promoted {user_member.first_name} Kaplan Felaketine!")
+        rt + f"\nBaşarıyla tanıtıldı {user_member.first_name} Kaplan Felaketine!")
 
     log_message = (f"#TIGER\n"
                    f"<b>Admin:</b> {mention_html(user.id, user.first_name)} \n"
-                   f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                   f"<b>Kullanıcı:</b> {mention_html(user_member.id, user_member.first_name)}")
 
     if chat.type != 'private':
         log_message = f"<b>{html.escape(chat.title)}:</b>\n" + log_message
@@ -287,7 +287,7 @@ def removesudo(bot: Bot, update: Update, args: List[str]) -> str:
 
         log_message = (f"#UNSUDO\n"
                        f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                       f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                       f"<b>Kullanıcı:</b> {mention_html(user_member.id, user_member.first_name)}")
 
         if chat.type != 'private':
             log_message = "<b>{}:</b>\n".format(html.escape(chat.title)) + log_message
@@ -328,7 +328,7 @@ def removesupport(bot: Bot, update: Update, args: List[str]) -> str:
 
         log_message = (f"#UNSUPPORT\n"
                        f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                       f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                       f"<b>Kullanıcı:</b> {mention_html(user_member.id, user_member.first_name)}")
 
         if chat.type != 'private':
             log_message = f"<b>{html.escape(chat.title)}:</b>\n" + log_message
@@ -369,7 +369,7 @@ def removewhitelist(bot: Bot, update: Update, args: List[str]) -> str:
 
         log_message = (f"#UNWHITELIST\n"
                        f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                       f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                       f"<b>Kullanıcı:</b> {mention_html(user_member.id, user_member.first_name)}")
 
         if chat.type != 'private':
             log_message = f"<b>{html.escape(chat.title)}:</b>\n" + log_message
@@ -409,7 +409,7 @@ def removetiger(bot: Bot, update: Update, args: List[str]) -> str:
 
         log_message = (f"#UNTIGER\n"
                        f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                       f"<b>User:</b> {mention_html(user_member.id, user_member.first_name)}")
+                       f"<b>Kullanıcı:</b> {mention_html(user_member.id, user_member.first_name)}")
 
         if chat.type != 'private':
             log_message = f"<b>{html.escape(chat.title)}:</b>\n" + log_message
