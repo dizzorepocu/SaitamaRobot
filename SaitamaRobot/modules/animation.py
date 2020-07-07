@@ -23,11 +23,11 @@ def police(bot: Bot, update: Update):
     for x in range(EDIT_TIMES):
         msg.edit_text(police_siren[x%2]) 
         time.sleep(EDIT_SLEEP)
-    msg.edit_text('Police is here!')
+    msg.edit_text('Aphrodite Burada!')
 
     
 __help__ = """
-• `/police`*:* Sends a police emoji animation. 
+• `/police`*:* Aphrodite i Çağır. 
 """
     
 POLICE_HANDLER = DisableAbleCommandHandler("police", police)
