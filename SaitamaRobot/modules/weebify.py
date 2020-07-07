@@ -28,7 +28,7 @@ def weebify(bot: Bot, update: Update, args: List[str]):
 
 
 __help__ = """
- • `/weebify <text>`*:* returns a weebified text
+ • `/weebify <mwsaj>`*:* ayıklanmış bir metin döndürür
  """
 
 WEEBIFY_HANDLER = DisableAbleCommandHandler("weebify", weebify, pass_args=True)
