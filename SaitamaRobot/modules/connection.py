@@ -160,14 +160,14 @@ def connect_chat(bot: Bot, update: Update, args: List[str]):
                 try:
                     sql.add_history_conn(user.id, str(chat.id), chat_name)
                     bot.send_message(msg.from_user.id, f"İle bağlandın *{chat_name}*."
-                                                       f" Mevcut komutları görmek için / connection kullanın.",
+                                                       f" Mevcut komutları görmek için /connection kullanın.",
                                      parse_mode="markdown")
                 except BadRequest:
                     pass
                 except Unauthorized:
                     pass
             else:
-                send_message(msg, "Connection failed!")
+                send_message(msg, "Bağlantı başarısız!")
         else:
             send_message(msg, "Bu sohbete bağlantıya izin verilmiyor!")
 
@@ -181,7 +181,7 @@ def disconnect_chat(bot: Bot, update: Update):
         if disconnection_status:
             sql.disconnected_chat = send_message(msg, "Sohbet bağlantısı kesildi!")
         else:
-            send_message(msg, "You're not connected!")
+            send_message(msg, "Bağlı değilsiniz!")
     else:
         send_message(msg, "Bu komut yalnızca PM'de kullanılabilir.")
 
