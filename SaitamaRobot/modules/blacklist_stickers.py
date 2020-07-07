@@ -357,8 +357,8 @@ def __stats__():
 __help__ = """
 kara liste etiketi, belirli etiketleri durdurmak için kullanılır. bir etiket gönderildiğinde, mesaj hemen silinir.
 *NOT:* kara liste etiketleri grup yöneticisini etkilemez.
- • `/blsticker`*:* Geçerli kara listeye alınmış etikete bakın.
-*Sadece Adminler:*
+ • `/blsticker`*:* geçerli kara listeye alınmış etikete bakın.
+*sadece adminler:*
  • `/addblsticker <sticker link>`*:* etiket tetikleyicisini kara listeye ekleyin. cevap etiketi ile eklenebilir.
  • `/unblsticker <sticker link>`*:* "tetikleyicileri kara listeden kaldırın. aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
  • `/rmblsticker <sticker link>`*:* yukarıdaki ile aynı.
