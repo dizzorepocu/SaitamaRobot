@@ -32,9 +32,9 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     message_chat_title = update.effective_message.chat.title
 
     if update_chat_title == message_chat_title:
-        base_blacklist_string = "Current <b>blacklisted</b> words:\n"
+        base_blacklist_string = "şimdiki <b>blacklisted</b> kelimeler:\n"
     else:
-        base_blacklist_string = f"Current <b>blacklisted</b> words in <b>{update_chat_title}</b>:\n"
+        base_blacklist_string = f"şimdiki <b>blacklisted</b> kelimeler içinde <b>{update_chat_title}</b>:\n"
 
     all_blacklisted = sql.get_chat_blacklist(chat.id)
 
@@ -85,7 +85,7 @@ def add_blacklist(bot: Bot, update: Update):
                 return
 
         if len(to_blacklist) == 1:
-            msg.reply_text(f"Added <code>{html.escape(to_blacklist[0])}</code> to the blacklist!",
+            msg.reply_text(f"Eklendi <code>{html.escape(to_blacklist[0])}</code> to the blacklist!",
                            parse_mode=ParseMode.HTML)
 
         else:
@@ -116,19 +116,19 @@ def unblacklist(bot: Bot, update: Update):
 
         if len(to_unblacklist) == 1:
             if successful:
-                msg.reply_text(f"Removed <code>{html.escape(to_unblacklist[0])}</code> from the blacklist!",
+                msg.reply_text(f"Silindi <code>{html.escape(to_unblacklist[0])}</code> kara listeden!",
                                parse_mode=ParseMode.HTML)
             else:
-                msg.reply_text("This isn't a blacklisted trigger...!")
+                msg.reply_text("Bu kara listeye alınan bir tetikleyici değil...!")
 
         elif successful == len(to_unblacklist):
-            msg.reply_text(f"Removed <code>{successful}</code> tetikler blacklist.", parse_mode=ParseMode.HTML)
+            msg.reply_text(f"Silindi <code>{successful}</code> tetikler blacklist.", parse_mode=ParseMode.HTML)
 
         elif not successful:
             msg.reply_text("Bu tetikleyicilerin hiçbiri mevcut olmadığından kaldırılmadı.", parse_mode=ParseMode.HTML)
 
         else:
-            msg.reply_text(f"Removed <code>{successful}</code> tetikler the blacklist."
+            msg.reply_text(f"Silindi <code>{successful}</code> tetikler the blacklist."
                            f" {len(to_unblacklist) - successful} mevcut değildi, bu yüzden kaldırılmadı.",
                            parse_mode=ParseMode.HTML)
     else:
@@ -174,7 +174,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __stats__():
-    return "{} blacklist tetikleyici, karşısında {} chats.".format(sql.num_blacklist_filters(),
+    return "{} blacklist tetikleyici, karşısında {} sohbetler.".format(sql.num_blacklist_filters(),
                                                             sql.num_blacklist_filter_chats())
 
 
@@ -183,7 +183,7 @@ Kara listeler, bir grupta belirli tetikleyicilerin söylenmesini durdurmak için
 mesaj hemen silinir. İyi bir kombo bazen bunu uyar filtreleriyle eşleştirmektir!
 *NOTE:* kara listeler grup yöneticisini etkilemez.
 
- • `/blacklist`*:* Vmevcut kara listeye alınan kelimeyi.
+ • `/blacklist`*:* mevcut kara listeye alınan kelimeleri gösterir.
 
 *Admins only:*
  • `/addblacklist <tetikleyici>`*:*Kara listeye bir tetikleyici ekleyin. Her satır bir tetikleyici olarak kabul edilir, bu nedenle farklı \
