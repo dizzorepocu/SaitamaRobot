@@ -199,13 +199,13 @@ def bluetext_ignore_list(bot: Bot, update: Update):
 __help__ = """
 Mavi metin temizleyici, insanların sohbetinizde gönderdiği tüm makyaj komutlarını kaldırdı.
  • `/cleanblue <on/off/yes/no>`*:* gönderdikten sonra komutları temizle
- • `/ignoreblue <word>`*:* komutun otomatik temizlenmesini önle
- • `/unignoreblue <word>`*:* kaldır komutun otomatik temizlenmesini önle
+ • `/ignoreblue <Kelime>`*:* komutun otomatik temizlenmesini önle
+ • `/unignoreblue <kelime>`*:* kaldır komutun otomatik temizlenmesini önle
  • `/listblue`*:* mevcut beyaz listeye alınmış komutları listele
  
  *Yalnızca Felaket komutları aşağıdadır, yöneticiler bunları kullanamaz:*
- • `/gignoreblue <word>`*:* küresel bot genelinde kaydedilen kelimenin bluetext temizlik görmezden.
- • `/ungignoreblue <word>`*:* söz konusu komutu genel temizlik listesinden kaldırt
+ • `/gignoreblue <kelime>`*:* küresel bot genelinde kaydedilen kelimenin bluetext temizlik görmezden.
+ • `/ungignoreblue <kelime>`*:* söz konusu komutu genel temizlik listesinden kaldırt
 """
 
 SET_CLEAN_BLUE_TEXT_HANDLER = CommandHandler("cleanblue", set_blue_text_must_click, pass_args=True)
