@@ -16,7 +16,7 @@ def speedtestxyz(bot: Bot, update: Update):
     buttons = [
         [InlineKeyboardButton("Image", callback_data="speedtest_image"), InlineKeyboardButton("Text", callback_data="speedtest_text")]
     ]
-    update.effective_message.reply_text("Select SpeedTest Mode",
+    update.effective_message.reply_text("SpeedTest Modunu Seç",
                                         reply_markup=InlineKeyboardMarkup(buttons))
 
 
@@ -25,7 +25,7 @@ def speedtestxyz_callback(bot: Bot, update: Update):
     query = update.callback_query
 
     if query.from_user.id in DEV_USERS:
-        msg = update.effective_message.edit_text('Running a speedtest....') 
+        msg = update.effective_message.edit_text('En hızlı koşma....') 
         speed = speedtest.Speedtest()
         speed.get_best_server()
         speed.download()
@@ -42,7 +42,7 @@ def speedtestxyz_callback(bot: Bot, update: Update):
             replymsg += f"\nDownload: `{convert(result['download'])}Mb/s`\nUpload: `{convert(result['upload'])}Mb/s`\nPing: `{result['ping']}`"
             update.effective_message.edit_text(replymsg, parse_mode=ParseMode.MARKDOWN)
     else:
-        query.answer("You are required to join Heroes Association to use this command.")
+        query.answer("Bu komutu kullanmak için Heroes Association'a katılmanız gerekiyor.")
 
 
 SPEED_TEST_HANDLER = DisableAbleCommandHandler("speedtest", speedtestxyz)
