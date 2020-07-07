@@ -290,10 +290,10 @@ if is_module_loaded(FILENAME):
     • `/cmds`*:* devre dışı bırakılmış komutların mevcut durumunu kontrol et
 
     *Admins only:*
-    • `/enable <cmd name>`*:* bu komutu etkinleştir
-    • `/disable <cmd name>`*:* bu komutu devre dışı bırak
-    • `/enablemodule <module name>`*:* bu modüldeki tüm komutları etkinleştir
-    • `/disablemodule <module name>`*:* bu modüldeki tüm komutları devre dışı bırak
+    • `/enable <cmd ismi>`*:* bu komutu etkinleştir
+    • `/disable <cmd ismi>`*:* bu komutu devre dışı bırak
+    • `/enablemodule <modüle ismi>`*:* bu modüldeki tüm komutları etkinleştir
+    • `/disablemodule <modül ismi>`*:* bu modüldeki tüm komutları devre dışı bırak
     • `/listcmds`*:* değiştirilebilen tüm komutları listele
     """
 
