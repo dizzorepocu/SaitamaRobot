@@ -1,4 +1,3 @@
-# AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
 from time import time, sleep
 import html
 
@@ -103,12 +102,12 @@ def chatbot(bot: Bot, update: Update):
             sleep(0.3)
             msg.reply_text(rep, timeout=60)
         except CFError as e:
-            bot.send_message(OWNER_ID, f"Sohbet Botu Hatası: {e} oluştu {chat_id}!")
+            bot.send_message(OWNER_ID, f"Chatbot Hatası: {e} occurred in {chat_id}!")
                     
 @run_async
 def list_chatbot_chats(bot: Bot, update: Update):
     chats = sql.get_all_chats()
-    text = "<b>AI-Sohbette Aktif</b>\n"
+    text = "<b>AI Etkin Sohbetler</b>\n"
     for chat in chats:
         try:
             x = bot.get_chat(int(*chat))
@@ -125,17 +124,15 @@ def list_chatbot_chats(bot: Bot, update: Update):
 __mod_name__ = "Chatbot"
 
 __help__ = f"""
-Chatbot CoffeeHouse API'sini kullanır ve bot'un konuşmasına izin verir ve daha etkileşimli bir grup sohbet deneyimi sağlar.
-
+Chatbot CoffeeHouse API'sini kullanır ve Saitama'nın konuşmasına izin verir ve daha etkileşimli bir grup sohbet deneyimi sağlar.
 *Commands:* 
 *Admins only:*
  • `/addchat`*:* Sohbette Chatbot modunu etkinleştirir.
- • `/rmchat`*:* Sohbette Chatbot modunu devre dışı bırakır.
+ • `/rmchat`*:* Sohbette Sohbet botu modunu devre dışı bırakır.
  
-*Yalnızca ejderhalar veya üstü:* 
+*Dragons or higher only:* 
  • `/listaichats`*:* Sohbet modunun etkin olduğu sohbetleri listeler.
-
-Adresindeki hataları raporlar {SUPPORT_CHAT}
+Reports bugs at {SUPPORT_CHAT}
 *Yapımcı CoffeeHouse* (https://coffeehouse.intellivoid.net/) from @Intellivoid
 """         
 
