@@ -42,7 +42,7 @@ def blackliststicker(bot: Bot, update: Update, args: List[str]):
 			chat_id = update.effective_chat.id
 			chat_name = chat.title
 		
-	sticker_list = "<b>List blacklisted stickers currently in {}:</b>\n".format(chat_name)
+	sticker_list = "<b>Şu anda kara listede bulunan etiketleri listele {}:</b>\n".format(chat_name)
 
 	all_stickerlist = sql.get_chat_stickers(chat_id)
 
@@ -55,8 +55,8 @@ def blackliststicker(bot: Bot, update: Update, args: List[str]):
 
 	split_text = split_message(sticker_list)
 	for text in split_text:
-		if sticker_list == "<b>List blacklisted stickers currently in {}:</b>\n".format(chat_name).format(chat_name):
-			send_message(update.effective_message, "There are no blacklist stickers in <b>{}</b>!".format(chat_name), parse_mode=ParseMode.HTML)
+		if sticker_list == "<b>Şu anda kara listede bulunan etiketleri listele {}:</b>\n".format(chat_name).format(chat_name):
+			send_message(update.effective_message, "İçinde kara liste etiketi yok <b>{}</b>!".format(chat_name), parse_mode=ParseMode.HTML)
 			return
 	send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
 
@@ -90,35 +90,35 @@ def add_blackliststicker(bot: Bot, update: Update):
 				sql.add_to_stickers(chat_id, trigger.lower())
 				added += 1
 			except BadRequest:
-				send_message(update.effective_message, "Sticker `{}` can not be found!".format(trigger), parse_mode="markdown")
+				send_message(update.effective_message, "Sticker `{}` bulunamıyor!".format(trigger), parse_mode="markdown")
 
 		if added == 0:
 			return
 
 		if len(to_blacklist) == 1:
-			send_message(update.effective_message, "Sticker <code>{}</code> added to blacklist stickers in <b>{}</b>!".format(html.escape(to_blacklist[0]), chat_name),
+			send_message(update.effective_message, "Sticker <code>{}</code> içindeki kara liste etiketlerine eklendi <b>{}</b>!".format(html.escape(to_blacklist[0]), chat_name),
 				parse_mode=ParseMode.HTML)
 		else:
-			send_message(update.effective_message, "<code>{}</code> stickers added to blacklist sticker in <b>{}</b>!".format(added, chat_name), parse_mode=ParseMode.HTML)
+			send_message(update.effective_message, "<code>{}</code> içindeki kara listeye eklenen etiketler <b>{}</b>!".format(added, chat_name), parse_mode=ParseMode.HTML)
 	elif msg.reply_to_message:
 		added = 0
 		trigger = msg.reply_to_message.sticker.set_name
 		if trigger == None:
-			send_message(update.effective_message, "Sticker is invalid!")
+			send_message(update.effective_message, "Sticker geçersizdir!")
 			return
 		try:
 			get = bot.getStickerSet(trigger)
 			sql.add_to_stickers(chat_id, trigger.lower())
 			added += 1
 		except BadRequest:
-			send_message(update.effective_message, "Sticker `{}` can not be found!".format(trigger), parse_mode="markdown")
+			send_message(update.effective_message, "Sticker `{}` bulunamıyor!".format(trigger), parse_mode="markdown")
 
 		if added == 0:
 			return
 
-		send_message(update.effective_message, "Sticker <code>{}</code> added to blacklist stickers in <b>{}</b>!".format(trigger, chat_name), parse_mode=ParseMode.HTML)
+		send_message(update.effective_message, "Sticker <code>{}</code> içindeki kara liste etiketlerine eklendi <b>{}</b>!".format(trigger, chat_name), parse_mode=ParseMode.HTML)
 	else:
-		send_message(update.effective_message, "Tell me what stickers you want to add to the blacklist.")
+		send_message(update.effective_message, "Kara listeye hangi çıkartmaları eklemek istediğini söyle.")
 
 @run_async
 @user_admin
@@ -151,36 +151,36 @@ def unblackliststicker(bot: Bot, update: Update):
 
 		if len(to_unblacklist) == 1:
 			if successful:
-				send_message(update.effective_message, "Sticker <code>{}</code> deleted from blacklist in <b>{}</b>!".format(html.escape(to_unblacklist[0]), chat_name),
+				send_message(update.effective_message, "Sticker <code>{}</code> içindeki kara listeden silindi <b>{}</b>!".format(html.escape(to_unblacklist[0]), chat_name),
 							   parse_mode=ParseMode.HTML)
 			else:
-				send_message(update.effective_message, "This sticker is not on the blacklist...!")
+				send_message(update.effective_message, "Bu çıkartma kara listede değil...!")
 
 		elif successful == len(to_unblacklist):
-			send_message(update.effective_message, "Sticker <code>{}</code> deleted from blacklist in <b>{}</b>!".format(
+			send_message(update.effective_message, "Sticker <code>{}</code> içindeki kara listeden silindi <b>{}</b>!".format(
 					successful, chat_name), parse_mode=ParseMode.HTML)
 
 		elif not successful:
-			send_message(update.effective_message, "None of these stickers exist, so they cannot be removed.".format(
+			send_message(update.effective_message, "Bu çıkartmaların hiçbiri mevcut değil, bu yüzden çıkarılamazlar.".format(
 					successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML)
 
 		else:
-			send_message(update.effective_message, "Sticker <code>{}</code> deleted from blacklist. {} did not exist, so it's not deleted.".format(successful, len(to_unblacklist) - successful),
+			send_message(update.effective_message, "Sticker <code>{}</code> kara listeden silindi. {} Var olmadı, bu yüzden silinmedi.".format(successful, len(to_unblacklist) - successful),
 				parse_mode=ParseMode.HTML)
 	elif msg.reply_to_message:
 		trigger = msg.reply_to_message.sticker.set_name
 		if trigger == None:
-			send_message(update.effective_message, "Sticker is invalid!")
+			send_message(update.effective_message, "Sticker geçersizdir!")
 			return
 		success = sql.rm_from_stickers(chat_id, trigger.lower())
 
 		if success:
-			send_message(update.effective_message, "Sticker <code>{}</code> deleted from blacklist in <b>{}</b>!".format(trigger, chat_name),
+			send_message(update.effective_message, "Sticker <code>{}</code> içindeki kara listeden silindi <b>{}</b>!".format(trigger, chat_name),
 							   parse_mode=ParseMode.HTML)
 		else:
-			send_message(update.effective_message, "{} not found on blacklisted stickers...!".format(trigger))
+			send_message(update.effective_message, "{} kara listeye alınmış çıkartmalarda bulunamadı...!".format(trigger))
 	else:
-		send_message(update.effective_message, "Tell me what stickers you want to add to the blacklist.")
+		send_message(update.effective_message, "Kara listeye hangi çıkartmaları eklemek istediğini söyle.")
 
 @run_async
 @loggable
@@ -198,7 +198,7 @@ def blacklist_mode(bot: Bot, update: Update, args: List[str]):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, "You can do this command in groups, not PM")
+			send_message(update.effective_message, "Bu komutu PM değil gruplar halinde yapabilirsiniz")
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -225,7 +225,7 @@ def blacklist_mode(bot: Bot, update: Update, args: List[str]):
 			sql.set_blacklist_strength(chat_id, 5, "0")
 		elif args[0].lower() == 'tban':
 			if len(args) == 1:
-				teks = """It looks like you are trying to set a temporary value to blacklist, but has not determined the time; use `/blstickermode tban <timevalue>`.
+				teks = """Kara listeye geçici bir değer ayarlamaya çalıştığınız anlaşılıyor, ama zamanı belirlemedi; kullan `/blstickermode tban <timevalue>`.
                                           Examples of time values: 4m = 4 minute, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
 				send_message(update.effective_message, teks, parse_mode="markdown")
 				return
@@ -233,23 +233,23 @@ def blacklist_mode(bot: Bot, update: Update, args: List[str]):
 			sql.set_blacklist_strength(chat_id, 6, str(args[1]))
 		elif args[0].lower() == 'tmute':
 			if len(args) == 1:
-				teks = """It looks like you are trying to set a temporary value to blacklist, but has not determined the time; use `/blstickermode tmute <timevalue>`.
+				teks = """Kara listeye geçici bir değer ayarlamaya çalıştığınız anlaşılıyor, ama zamanı belirlemedi; kullan `/blstickermode tmute <timevalue>`.
                                           Examples of time values: 4m = 4 minute, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
 				send_message(update.effective_message, teks, parse_mode="markdown")
 				return
-			settypeblacklist = tl(update.effective_message, 'temporary muted for {}').format(args[1])
+			settypeblacklist = tl(update.effective_message, 'geçici olarak kapatıldı {}').format(args[1])
 			sql.set_blacklist_strength(chat_id, 7, str(args[1]))
 		else:
-			send_message(update.effective_message, "I only understand off/del/warn/ban/kick/mute/tban/tmute!")
+			send_message(update.effective_message, "Sadece anlıyorum off/del/warn/ban/kick/mute/tban/tmute!")
 			return
 		if conn:
-			text = "Blacklist sticker mode changed, users will be `{}` at *{}*!".format(settypeblacklist, chat_name)
+			text = "Kara liste çıkartma modu değişti, kullanıcılar olacak `{}` at *{}*!".format(settypeblacklist, chat_name)
 		else:
-			text = "Blacklist sticker mode changed, users will be `{}`!".format(settypeblacklist)
+			text = "Kara liste çıkartma modu değişti, kullanıcılar olacak `{}`!".format(settypeblacklist)
 		send_message(update.effective_message, text, parse_mode="markdown")
 		return "<b>{}:</b>\n" \
 				"<b>Admin:</b> {}\n" \
-				"Changed sticker blacklist mode. users will be {}.".format(html.escape(chat.title),
+				"Etiket kara listesi modunu değiştirdi. kullanıcılar olacak {}.".format(html.escape(chat.title),
 																			mention_html(user.id, user.first_name), settypeblacklist)
 	else:
 		getmode, getvalue = sql.get_blacklist_setting(chat.id)
@@ -266,13 +266,13 @@ def blacklist_mode(bot: Bot, update: Update, args: List[str]):
 		elif getmode == 5:
 			settypeblacklist = "ban"
 		elif getmode == 6:
-			settypeblacklist = "temporarily banned for {}".format(getvalue)
+			settypeblacklist = "geçici olarak yasaklandı {}".format(getvalue)
 		elif getmode == 7:
-			settypeblacklist = "temporarily muted for {}".format(getvalue)
+			settypeblacklist = "geçici olarak susturuldu {}".format(getvalue)
 		if conn:
-			text = "Blacklist sticker mode is currently set to *{}* in *{}*.".format(settypeblacklist, chat_name)
+			text = "Kara liste çıkartma modu şu anda olarak ayarlanmış *{}* in *{}*.".format(settypeblacklist, chat_name)
 		else:
-			text = "Blacklist sticker mode is currently set to *{}*.".format(settypeblacklist)
+			text = "Kara liste çıkartma modu şu anda olarak ayarlanmış *{}*.".format(settypeblacklist)
 		send_message(update.effective_message, text, parse_mode=ParseMode.MARKDOWN)
 	return ""
 
@@ -298,41 +298,41 @@ def del_blackliststicker(bot: Bot, update: Update):
 					message.delete()
 				elif getmode == 2:
 					message.delete()
-					warn(update.effective_user, chat, "Using sticker '{}' which in blacklist stickers".format(trigger), message, update.effective_user, conn=False)
+					warn(update.effective_user, chat, "Çıkartma kullanma '{}' hangi kara liste çıkartmaları".format(trigger), message, update.effective_user, conn=False)
 					return
 				elif getmode == 3:
 					message.delete()
 					bot.restrict_chat_member(chat.id, update.effective_user.id, can_send_messages=False)
-					bot.sendMessage(chat.id, "{} muted because using '{}' which in blacklist stickers".format(mention_markdown(user.id, user.first_name), trigger), parse_mode="markdown")
+					bot.sendMessage(chat.id, "{} sesi kapalı çünkü kullanıyor '{}' hangi kara liste çıkartmaları".format(mention_markdown(user.id, user.first_name), trigger), parse_mode="markdown")
 					return
 				elif getmode == 4:
 					message.delete()
 					res = chat.unban_member(update.effective_user.id)
 					if res:
-						bot.sendMessage(chat.id, "{} kicked because using '{}' which in blacklist stickers".format(mention_markdown(user.id, user.first_name), trigger), parse_mode="markdown")
+						bot.sendMessage(chat.id, "{} çünkü tekmeledi '{}' hangi kara liste çıkartmaları".format(mention_markdown(user.id, user.first_name), trigger), parse_mode="markdown")
 					return
 				elif getmode == 5:
 					message.delete()
 					chat.kick_member(user.id)
-					bot.sendMessage(chat.id, "{} banned because using '{}' which in blacklist stickers".format(mention_markdown(user.id, user.first_name), trigger), parse_mode="markdown")
+					bot.sendMessage(chat.id, "{} kullanıldığından yasaklandı '{}' hangi kara liste çıkartmaları".format(mention_markdown(user.id, user.first_name), trigger), parse_mode="markdown")
 					return
 				elif getmode == 6:
 					message.delete()
 					bantime = extract_time(message, value)
 					chat.kick_member(user.id, until_date=bantime)
-					bot.sendMessage(chat.id, "{} banned for {} because using '{}' which in blacklist stickers".format(mention_markdown(user.id, user.first_name), value, trigger), parse_mode="markdown")
+					bot.sendMessage(chat.id, "{} için yasaklandı {} çünkü kullanmak '{}' hangi kara liste çıkartmaları".format(mention_markdown(user.id, user.first_name), value, trigger), parse_mode="markdown")
 					return
 				elif getmode == 7:
 					message.delete()
 					mutetime = extract_time(message, value)
 					bot.restrict_chat_member(chat.id, user.id, until_date=mutetime, can_send_messages=False)
-					bot.sendMessage(chat.id, "{} muted for {} because using '{}' which in blacklist stickers".format(mention_markdown(user.id, user.first_name), value, trigger), parse_mode="markdown")
+					bot.sendMessage(chat.id, "{} sesi kapatıldı {} çünkü kullanmak '{}' hangi kara liste çıkartmaları".format(mention_markdown(user.id, user.first_name), value, trigger), parse_mode="markdown")
 					return
 			except BadRequest as excp:
-				if excp.message == "Message to delete not found":
+				if excp.message == "Silinecek mesaj bulunamadı":
 					pass
 				else:
-					LOGGER.exception("Error while deleting blacklist message.")
+					LOGGER.exception("Kara liste mesajı silinirken hata oluştu.")
 				break
 
 
@@ -349,20 +349,20 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
 	blacklisted = sql.num_stickers_chat_filters(chat_id)
-	return "There are `{} `blacklisted stickers.".format(blacklisted)
+	return "Var `{} `kara listeye alınan çıkartmalar.".format(blacklisted)
 
 def __stats__():
-	return "{} blacklist stickers, across {} chats.".format(sql.num_stickers_filters(), sql.num_stickers_filter_chats())
+	return "{} kara liste çıkartmalar, karşısında {} sohbetler.".format(sql.num_stickers_filters(), sql.num_stickers_filter_chats())
 
 __help__ = """
-Blacklist sticker is used to stop certain stickers. Whenever a sticker is sent, the message will be deleted immediately.
-*NOTE:* Blacklist stickers do not affect the group admin.
- • `/blsticker`*:* See current blacklisted sticker.
+Kara liste etiketi, belirli etiketleri durdurmak için kullanılır. Bir çıkartma gönderildiğinde, mesaj hemen silinecek.
+*NOTE:* Kara liste etiketleri grup yöneticisini etkilemez.
+ • `/blsticker`*:* Geçerli kara listeye alınmış etikete bakın.
 *Only admin:*
- • `/addblsticker <sticker link>`*:* Add the sticker trigger to the black list. Can be added via reply sticker.
- • `/unblsticker <sticker link>`*:* Remove triggers from blacklist. The same newline logic applies here, so you can delete multiple triggers at once.
- • `/rmblsticker <sticker link>`*:* Same as above.
- • `/blstickermode <ban/tban/mute/tmute>`*:* sets up a default action on what to do if users use blacklisted stickers. (`tmute seems broken right now`)
+ • `/addblsticker <sticker link>`*:* Etiket tetikleyicisini kara listeye ekleyin. Cevap etiketi ile eklenebilir.
+ • `/unblsticker <sticker link>`*:* Tetikleyicileri kara listeden kaldır. Aynı yeni satır mantığı burada geçerlidir, böylece aynı anda birden fazla tetikleyiciyi silebilirsiniz.
+ • `/rmblsticker <sticker link>`*:* Yukarıdaki ile aynı.
+ • `/blstickermode <ban/tban/mute/tmute>`*:* kullanıcılar kara listeye alınmış etiketler kullanıyorsa ne yapılacağı konusunda varsayılan bir işlem ayarlar. (`tmute şu anda kırık görünüyor`)
 Note:
  • `<sticker link>` can be `https://t.me/addstickers/<sticker>` or just `<sticker>` or reply to the sticker message.
 """
